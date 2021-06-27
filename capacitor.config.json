@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "KosovoRugbyFederation",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

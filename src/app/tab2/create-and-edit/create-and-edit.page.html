@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{isEdit ? "Edit Player Data" : "Register a new player"}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <form [formGroup]="createAndEditPlayerForm" (ngSubmit)="submitForm()">
+    <ion-item>
+      <ion-label>
+        Username:
+      </ion-label>
+      <ion-input formControlName='firstName' type="text"> </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        Password:
+      </ion-label>
+      <ion-input formControlName='lastName' type="password"> </ion-input>
+    </ion-item>
+    <ion-button type="submit">
+      {{isEdit ? 'Update' : 'Submit'}}
+    </ion-button>
+  </form>
+
+
+</ion-content>

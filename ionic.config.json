@@ -1,0 +1,7 @@
+{
+  "name": "KosovoRugbyFederation",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
