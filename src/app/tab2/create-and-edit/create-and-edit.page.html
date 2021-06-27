@@ -1,32 +1,209 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="tabs/tab2"></ion-back-button>
     </ion-buttons>
     <ion-title>{{isEdit ? "Edit Player Data" : "Register a new player"}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="submitForm()">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xs="12" size-lg="6" offset-lg="3"> 
+        <form [formGroup]="createAndEditPlayerForm" (ngSubmit)="submitForm()">
+          <ion-item>
+            <ion-label position="floating">Club</ion-label>
+            <ion-select formControlName="clubId">
+              <ion-select-option>awd</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              First Name:
+            </ion-label>
+            <ion-input formControlName='firstName' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Middle Name:
+            </ion-label>
+            <ion-input formControlName='middleName' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Last Name:
+            </ion-label>
+            <ion-input formControlName='lastName' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Age Group</ion-label>
+            <ion-select formControlName="ageGroup">
+              <ion-select-option>awd</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Birth Town:
+            </ion-label>
+            <ion-input formControlName='birthTown' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Birth Country:
+            </ion-label>
+            <ion-input formControlName='birthCountry' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Nationality:
+            </ion-label>
+            <ion-input formControlName='nationality' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              City:
+            </ion-label>
+            <ion-input formControlName='city' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Country:
+            </ion-label>
+            <ion-input formControlName='country' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Postal Code:
+            </ion-label>
+            <ion-input formControlName='postalCode' type="number"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Street Address:
+            </ion-label>
+            <ion-input formControlName='streetAddress' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Address:
+            </ion-label>
+            <ion-input formControlName='address' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Birthdate</ion-label>
+            <ion-datetime formControlName="birthDate"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Phone Number:
+            </ion-label>
+            <ion-input formControlName='phoneNumber' type="tel"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Playing Position:
+            </ion-label>
+            <ion-input formControlName='playingPosition' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Can Represent Kosovo</ion-label>
+            <ion-checkbox slot="end" formControlName="canRepresentKosovo"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Is Player coming from the Juridiction of another Union?</ion-label>
+            <ion-checkbox slot="end" formControlName="isPlayerCommingFromTheJuridictionOfAnOtherUnion"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Previous Club Name:
+            </ion-label>
+            <ion-input formControlName='previousClubName' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Previous Club Union:
+            </ion-label>
+            <ion-input formControlName='previousClubUnion' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Previous Club Registered:
+            </ion-label>
+            <ion-input formControlName='previousClubRegistered' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Previous Club Leaving Date</ion-label>
+            <ion-datetime formControlName="previousClubLeavingDate"></ion-datetime>
+          </ion-item>
+          <div formGroupName="transferFormNotification">
+            <ion-title style="padding: 10px 15px 0;">Transfer Form Notification</ion-title>
+            <ion-item>
+              <ion-label>Position</ion-label>
+              <ion-checkbox slot="end" formControlName="position"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Read Timeout</ion-label>
+              <ion-checkbox slot="end" formControlName="readTimeout"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Write Timeout</ion-label>
+              <ion-checkbox slot="end" formControlName="writeTimeout"></ion-checkbox>
+            </ion-item>
+            
+          </div>
+          <div formGroupName="worldRugbyInternationalClearenceForm">
+            <ion-title style="padding: 10px 15px 0;">World Rugby Interantional Clearence Form</ion-title>
+            <ion-item>
+              <ion-label>Position</ion-label>
+              <ion-checkbox slot="end" formControlName="position"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Read Timeout</ion-label>
+              <ion-checkbox slot="end" formControlName="readTimeout"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Write Timeout</ion-label>
+              <ion-checkbox slot="end" formControlName="writeTimeout"></ion-checkbox>
+            </ion-item>
+            
+          </div>
+          <ion-item>
+            <ion-label>Player Declaration Signed</ion-label>
+            <ion-checkbox slot="end" formControlName="playerDeclarationSigned"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Signed Date</ion-label>
+            <ion-datetime formControlName="playerSignedDeclaration"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label>Allow KRF To use Personal Data</ion-label>
+            <ion-checkbox slot="end" formControlName="allowKRFToUsePersonalData"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Can KFR Use Data?</ion-label>
+            <ion-checkbox slot="end" formControlName="canKRFUseData"></ion-checkbox>
+          </ion-item>
 
-  <form [formGroup]="createAndEditPlayerForm" (ngSubmit)="submitForm()">
-    <ion-item>
-      <ion-label>
-        Username:
-      </ion-label>
-      <ion-input formControlName='firstName' type="text"> </ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        Password:
-      </ion-label>
-      <ion-input formControlName='lastName' type="password"> </ion-input>
-    </ion-item>
-    <ion-button type="submit">
-      {{isEdit ? 'Update' : 'Submit'}}
-    </ion-button>
-  </form>
+
+          <!-- <ion-grid class="ion-text-center">
+
+          </ion-grid>
+          <ion-button type="submit">
+            {{isEdit ? 'Update' : 'Submit'}}
+          </ion-button> -->
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
 
 
 </ion-content>

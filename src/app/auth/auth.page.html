@@ -1,28 +1,45 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>auth</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
 
-  <form [formGroup]="authForm" (ngSubmit)="loginFunction()">
-    <ion-item>
-      <ion-label>
-        Username:
-      </ion-label>
-      <ion-input formControlName='userName' type="text"> </ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        Password:
-      </ion-label>
-      <ion-input formControlName='password' type="password"> </ion-input>
-    </ion-item>
-    <ion-button type="submit">
-      Login
-    </ion-button>
-  </form>
+  <ion-grid style="margin-top: 10%;">
+    <ion-row>
+      <ion-col size-xs="12" offset-xs="0" size-lg="5"  offset-lg="3.5" >
+        <ion-card >
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Login</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form [formGroup]="authForm" (ngSubmit)="loginFunction()">
+              <ion-item>
+                <ion-label position="floating">
+                  Username:
+                </ion-label>
+                <ion-input formControlName='email' type="email"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Password:
+                </ion-label>
+                <ion-input formControlName='password' type="password"> </ion-input>
+              </ion-item>
+              <ion-grid class="ion-text-center">
+                <ion-button style="margin-top: 15px;" type="submit">
+                  Login
+                </ion-button>
+              </ion-grid>
+            </form>
+          
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+ 
 
 
 </ion-content>

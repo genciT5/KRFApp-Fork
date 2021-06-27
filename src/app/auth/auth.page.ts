@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavController } from '@ionic/angular';
+import { AlertsService } from '../shared/services/alerts.service';
 import { WebserviceService } from '../shared/services/webservice.service';
 
 @Component({
@@ -11,11 +13,15 @@ export class AuthPage implements OnInit {
 
   authForm: FormGroup;
 
-  constructor(private webService: WebserviceService) { }
+  constructor(
+    private webService: WebserviceService,
+    private alerts: AlertsService,
+    private navCtrl: NavController
+    ) { }
 
   ngOnInit() {
     this.authForm = new FormGroup({
-      userName: new FormControl('',{
+      email: new FormControl('',{
         updateOn: 'change',
         validators: [
           Validators.required
@@ -29,11 +35,20 @@ export class AuthPage implements OnInit {
       })
     });
   }
+
+
   loginFunction() {
-      const linku = 'login';
+    this.alerts.presentLoadingController();
+      const linku = 'authenticate/login';
       this.webService.calling_Post_From_Api(linku, this.authForm.value).then((data: any) => {
         console.log(data);
+        if (data) {
+          this.webService.setUserData(data);
+          this.navCtrl.navigateRoot('tabs/tab1')
+        }
+        this.alerts.dismissLoadingController();
       }).catch((err: any) => {
+        this.alerts.dismissLoadingController();
         console.log(err);
       });
     }
