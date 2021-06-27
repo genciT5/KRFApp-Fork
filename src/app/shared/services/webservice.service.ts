@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { Storage } from '@capacitor/storage';
+import { NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,8 @@ export class WebserviceService {
 
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private navCtrl: NavController
   ) { }
 
   get getHttpHeaders(){
@@ -85,6 +87,12 @@ export class WebserviceService {
       });
     });
 
+  }
+
+  logout() {
+    Storage.remove({key: 'KRFuserData'});
+    this.authenticationState.next(false);
+    this.navCtrl.navigateRoot(['/auth']);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { WebserviceService } from './shared/services/webservice.service';
 
 @Component({
@@ -10,7 +10,8 @@ import { WebserviceService } from './shared/services/webservice.service';
 export class AppComponent {
   constructor(
     private webService: WebserviceService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private menuController: MenuController
   ) {
     this.appInit()
   }
@@ -22,5 +23,10 @@ export class AppComponent {
       this.webService.setUserData(JSON.parse(KRFuserData.value));
       // this.navCtrl.navigateRoot('tabs/tab1');
     }
+  }
+
+  dismissMenu() {
+    this.menuController.close();
+    this.webService.logout();
   }
 }
