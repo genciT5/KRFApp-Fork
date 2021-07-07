@@ -25,7 +25,7 @@
           <ion-card-content>
             <ion-input [accept]="'.jpg, .png, .jpeg'" class="ion-text-center" type="file" (change)="fileSelector(1, $event)"></ion-input>
             <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img>
-            <ion-button (click)="uploadFile(1)">Upload</ion-button>
+            <ion-button *ngIf="selectedProfilePicture" (click)="uploadFile(1)">Upload</ion-button>
           </ion-card-content>
         </ion-card>
       </ion-col>

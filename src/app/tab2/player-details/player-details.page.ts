@@ -33,4 +33,8 @@ export class PlayerDetailsPage implements OnInit {
   ngOnInit() {
   }
 
+  downloadFile(fileName) {
+    const url = this.environmenti.apiBase + 'Files/' + fileName;
+    window.open(url, "_blank");
+  }
 }

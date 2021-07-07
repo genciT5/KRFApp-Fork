@@ -14,7 +14,7 @@
         <ion-card>
           <ion-card-header>
             <ion-thumbnail style="margin: auto; zoom: 3;">
-              <ion-img [src]="player?.profilePicture ? player.profilePicture : environmenti.defailtProfilePicture"></ion-img>
+              <ion-img [src]="player?.profilePicture ? environmenti.apiBase + 'Files/' + player.profilePicture : environmenti.defailtProfilePicture"></ion-img>
             </ion-thumbnail>
           </ion-card-header>
           <ion-card-content>
@@ -27,7 +27,6 @@
               <p>{{ player?.birthCountry }}</p>
               <p>{{ player?.nationality }}</p>
             </ion-grid>
-            
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -104,11 +103,11 @@
                 <ion-col style="padding: 0;" size="6"><p>Previous Club Leaving Date</p></ion-col>
                 <ion-col style="padding: 0;" size="6"><p>{{ player?.previousClubLeavingDate | date:"dd.MM.yyyy"}}</p></ion-col>
               </ion-row>
-              <ion-row>
+              <ion-row class="hoverStyle" (click)="downloadFile(player?.transferFormNotification)">
                 <ion-col style="padding: 0;" size="6"><p>Transfer Form Notification</p></ion-col>
                 <ion-col style="padding: 0;" size="6"><p>{{ player?.transferFormNotification }}</p></ion-col>
               </ion-row>
-              <ion-row>
+              <ion-row class="hoverStyle" (click)="downloadFile(player?.worldRugbyInternationalClearenceForm)">
                 <ion-col style="padding: 0;" size="6"><p>World Rugby International Clearence Form</p></ion-col>
                 <ion-col style="padding: 0;" size="6"><p>{{ player?.worldRugbyInternationalClearenceForm }}</p></ion-col>
               </ion-row>
