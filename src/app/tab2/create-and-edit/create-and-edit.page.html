@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="tabs/tab2"></ion-back-button>
     </ion-buttons>
     <ion-title>{{isEdit ? "Edit Player Data" : "Register a new player"}}</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons *ngIf="!isEdit" slot="end">
       <ion-button (click)="submitForm()">
         <ion-icon slot="icon-only" name="checkmark"></ion-icon>
       </ion-button>
@@ -15,15 +15,54 @@
 <ion-content>
 
   <ion-grid>
+
+    <ion-row *ngIf="isEdit">
+      <ion-col size-xs="12" size-lg="4" >
+        <ion-card class="ion-text-center">
+          <ion-card-header>
+            <ion-card-title>Profile Picture</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-input [accept]="'.jpg, .png, .jpeg'" class="ion-text-center" type="file" (change)="fileSelector(1, $event)"></ion-input>
+            <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img>
+            <ion-button (click)="uploadFile(1)">Upload</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size-xs="12" size-lg="4" >
+        <ion-card class="ion-text-center">
+          <ion-card-header>
+            <ion-card-title>Transfer Form Notification</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-input [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(2, $event)"></ion-input>
+            <!-- <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img> -->
+            <ion-button *ngIf="selectedTransferFormNotificationFile" (click)="uploadFile(2)">Upload</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size-xs="12" size-lg="4" >
+        <ion-card class="ion-text-center">
+          <ion-card-header>
+            <ion-card-title>World Rugby International Clearence Form</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-input [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(3, $event)"></ion-input>
+            <!-- <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img> -->
+            <ion-button *ngIf="selectedWorldRugbyIntClForm" (click)="uploadFile(3)">Upload</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col size-xs="12" size-lg="6" offset-lg="3"> 
         <form [formGroup]="createAndEditPlayerForm" (ngSubmit)="submitForm()">
-          <ion-item>
+          <!-- <ion-item>
             <ion-label position="floating">Club</ion-label>
             <ion-select formControlName="clubId">
               <ion-select-option>awd</ion-select-option>
             </ion-select>
-          </ion-item>
+          </ion-item> -->
           <ion-item>
             <ion-label position="floating">
               First Name:
@@ -45,7 +84,8 @@
           <ion-item>
             <ion-label position="floating">Age Group</ion-label>
             <ion-select formControlName="ageGroup">
-              <ion-select-option>awd</ion-select-option>
+              <ion-select-option value="0">Junior</ion-select-option>
+              <ion-select-option value="1">Senior</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
@@ -104,7 +144,13 @@
             <ion-label position="floating">
               Phone Number:
             </ion-label>
-            <ion-input formControlName='phoneNumber' type="tel"> </ion-input>
+            <ion-input formControlName='phoneNumber' type="number"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              Personal Number:
+            </ion-label>
+            <ion-input formControlName='personalNumber' type="number"> </ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">
@@ -114,7 +160,7 @@
           </ion-item>
           <ion-item>
             <ion-label>Can Represent Kosovo</ion-label>
-            <ion-checkbox slot="end" formControlName="canRepresentKosovo"></ion-checkbox>
+            <ion-checkbox slot="end" formControlName="canRepresanteKosovo"></ion-checkbox>
           </ion-item>
           <ion-item>
             <ion-label>Is Player coming from the Juridiction of another Union?</ion-label>
@@ -142,7 +188,19 @@
             <ion-label position="floating">Previous Club Leaving Date</ion-label>
             <ion-datetime formControlName="previousClubLeavingDate"></ion-datetime>
           </ion-item>
-          <div formGroupName="transferFormNotification">
+          <!-- <ion-item>
+            <ion-label position="floating">
+              Transfer Form Notification:
+            </ion-label>
+            <ion-input formControlName='transferFormNotification' type="text"> </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              World Rugby International Clearence Form:
+            </ion-label>
+            <ion-input formControlName='worldRugbyInternationalClearenceForm' type="text"> </ion-input>
+          </ion-item> -->
+          <!-- <div formGroupName="transferFormNotification">
             <ion-title style="padding: 10px 15px 0;">Transfer Form Notification</ion-title>
             <ion-item>
               <ion-label>Position</ion-label>
@@ -173,7 +231,7 @@
               <ion-checkbox slot="end" formControlName="writeTimeout"></ion-checkbox>
             </ion-item>
             
-          </div>
+          </div> -->
           <ion-item>
             <ion-label>Player Declaration Signed</ion-label>
             <ion-checkbox slot="end" formControlName="playerDeclarationSigned"></ion-checkbox>

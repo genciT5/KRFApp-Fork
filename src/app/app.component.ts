@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { MenuController, NavController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import { WebserviceService } from './shared/services/webservice.service';
-
+import { Device } from '@capacitor/device';
+import { PublicService } from './shared/services/public.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -10,13 +11,17 @@ import { WebserviceService } from './shared/services/webservice.service';
 export class AppComponent {
   constructor(
     private webService: WebserviceService,
-    private navCtrl: NavController,
-    private menuController: MenuController
+    // private navCtrl: NavController,
+    private menuController: MenuController,
+    private publicService: PublicService
   ) {
     this.appInit()
   }
 
   async appInit() {
+    Device.getInfo().then((data: any) => {
+      this.publicService.deviceData = data;
+    })
     const KRFuserData = await this.webService.getUserDataFromStorage();
     console.log(KRFuserData);
     if (KRFuserData.value) {

@@ -25,6 +25,18 @@ export class WebserviceService {
   };
 
 
+  protected httpOptionsFile = {
+    headers: new HttpHeaders({
+      // 'Content-Type': 'multipart/formdata',
+      // 'Accept': 'multipart/formdata',
+      // 'Accept': 'application/json',
+      // 'Content-Type': 'application/json',
+      // tslint:disable-next-line: object-literal-key-quotes
+      'Authorization': '',
+    })
+  };
+
+
 
   constructor(
     private apiService: ApiService,
@@ -46,6 +58,7 @@ export class WebserviceService {
       }
     )
     this.httpOptions.headers = this.httpOptions.headers.set('Authorization', 'Bearer ' + userData.token);
+    this.httpOptionsFile.headers = this.httpOptionsFile.headers.set('Authorization', 'Bearer ' + userData.token);
     console.log(this.httpOptions);
     this.authenticationState.next(true);
   }
@@ -67,9 +80,9 @@ export class WebserviceService {
     return this.authenticationState.value;
   }
 
-  calling_Post_From_Api(link, params) {
+  calling_Post_From_Api(link, params, isFileUpload = false) {
     return new Promise((resolve, reject) => {
-      this.apiService.post(link, params, this.getHttpHeaders).subscribe((data: any) => {
+      this.apiService.post(link, params, isFileUpload ? this.httpOptionsFile : this.getHttpHeaders).subscribe((data: any) => {
         resolve(data);
       }, err => {
         reject(err);

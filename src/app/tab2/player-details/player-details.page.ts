@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-player-details',
@@ -9,7 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PlayerDetailsPage implements OnInit {
 
   player: any = null;
-
+  environmenti = environment;
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router
@@ -22,6 +24,8 @@ export class PlayerDetailsPage implements OnInit {
                let navParams = this.router.getCurrentNavigation().extras.state;
                this.player = navParams.player;
                console.log(navParams);
+          } else {
+            this.router.navigateByUrl('tabs/tab2');
           }
         })
   }

@@ -14,34 +14,20 @@
         <ion-card>
           <ion-card-header>
             <ion-thumbnail style="margin: auto; zoom: 3;">
-              <ion-img [src]="player?.image"></ion-img>
+              <ion-img [src]="player?.profilePicture ? player.profilePicture : environmenti.defailtProfilePicture"></ion-img>
             </ion-thumbnail>
           </ion-card-header>
           <ion-card-content>
-            <ion-item>
-              <div>
-                <p>Full Name</p>
-              </div>
-              <div slot="end" class="ion-text-right">
-                <p slot="end">{{player?.firstName }} {{ player?.lastName }}</p>
-              </div>
-            </ion-item>
-            <ion-item>
-              <div>
-                <p>Birthday</p>
-              </div>
-              <div slot="end" class="ion-text-right">
-                <p slot="end">{{player?.birthday }}</p>
-              </div>
-            </ion-item>
-            <ion-item>
-              <div>
-                <p>Description</p>
-              </div>
-              <div slot="end" class="ion-text-right" style="max-width: 50px;">
-                <p slot="end">{{player?.description }}</p>
-              </div>
-            </ion-item>
+            <ion-grid class="ion-text-center">
+              <h1>{{player?.firstName }} {{ player?.middleName }} {{ player?.lastName }}</h1>
+              <p>{{player?.birthDate | date:"dd.MM.yyyy" }}</p>
+              <p>{{ player?.personalNumber }}</p>
+              <p>{{ player?.playingPosition }}</p>
+              <p>{{ player?.birthTown }}</p>
+              <p>{{ player?.birthCountry }}</p>
+              <p>{{ player?.nationality }}</p>
+            </ion-grid>
+            
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -53,9 +39,96 @@
             </ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-card-subtitle>
-              Will appear here!
-            </ion-card-subtitle>
+            <ion-grid style="padding: 0;">
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Age Group</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.ageGroup ? 'Senior' : 'Junior' }}</p></ion-col>
+              </ion-row>
+              <!-- <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Birth Town</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.birthTown }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Birth Country</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.birthCountry }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Nationality</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.nationality }}</p></ion-col>
+              </ion-row> -->
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>City</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.city }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Country</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.country }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Postal Code</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.postalCode }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Street Address</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.streetAddress }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Address</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.address }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Phone Number</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.phoneNumber }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Can Represent Kosovo</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.canRepresanteKosovo ? 'Yes' : 'No' }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Is Player coming from the Juridiction of another Union?</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.isPlayerCommingFromTheJuridictionOfAnOtherUnion ? 'Yes' : 'No' }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Previous Club Name</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.previousClubName }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Previous Club Union</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.previousClubUnion }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Previous Club Registered</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.previousClubRegistered }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Previous Club Leaving Date</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.previousClubLeavingDate | date:"dd.MM.yyyy"}}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Transfer Form Notification</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.transferFormNotification }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>World Rugby International Clearence Form</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.worldRugbyInternationalClearenceForm }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Player Declaration Signed</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.playerDeclarationSigned ? 'Yes' : 'No' }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Signed Date</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.playerSignedDeclaration | date:"dd.MM.yyyy" }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Allow KRF To use Personal Data</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.allowKRFToUsePersonalData ? 'Yes' : 'No' }}</p></ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="padding: 0;" size="6"><p>Can KFR Use Data?</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.canKRFUseData ? 'Yes' : 'No' }}</p></ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-card-content>
         </ion-card>
       </ion-col>

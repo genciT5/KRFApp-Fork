@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { CreateAndEditPageRoutingModule } from './create-and-edit-routing.module';
 
 import { CreateAndEditPage } from './create-and-edit.page';
+// import { FileUploadModule } from 'ng2-file-upload';
+// import { Ng2ImgMaxModule } from 'ng2-img-max';
 
 @NgModule({
   imports: [
@@ -14,7 +16,9 @@ import { CreateAndEditPage } from './create-and-edit.page';
     FormsModule,
     IonicModule,
     CreateAndEditPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // FileUploadModule,
+    // Ng2ImgMaxModule
   ],
   declarations: [CreateAndEditPage]
 })

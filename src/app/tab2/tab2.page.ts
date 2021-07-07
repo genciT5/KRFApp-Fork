@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { AlertsService } from '../shared/services/alerts.service';
+import { environment } from 'src/environments/environment';
 import { WebserviceService } from '../shared/services/webservice.service';
+
+
 
 @Component({
   selector: 'app-tab2',
@@ -11,37 +13,15 @@ import { WebserviceService } from '../shared/services/webservice.service';
 })
 export class Tab2Page {
 
+  environmenti = environment;
   playersList: any[] = [
-    {
-      firstName: 'Milot',
-      lastName: 'Hoxha',
-      id: '1231231-123182hkjauhdia7hwyei1-2',
-      birthday: '13.10.1994',
-      description: 'awdjuh akwdhkauhwd',
-      image: 'https://th.bing.com/th/id/OIP.gBbjm8Ald7qRzHwXVqy1AwAAAA?w=176&h=176&c=7&o=5&dpr=2&pid=1.7'
-    },
-    {
-      firstName: 'Milot',
-      lastName: 'Hoxha',
-      id: '1231231-123182hkjauhdia7hwyei1-2',
-      birthday: '13.10.1994',
-      description: 'awdjuh akwdhkauhwd',
-      image: 'https://th.bing.com/th/id/OIP.gBbjm8Ald7qRzHwXVqy1AwAAAA?w=176&h=176&c=7&o=5&dpr=2&pid=1.7'
-    },
-    {
-      firstName: 'Milot',
-      lastName: 'Hoxha',
-      id: '1231231-123182hkjauhdia7hwyei1-2',
-      birthday: '13.10.1994',
-      description: 'awdjuh akwdhkauhwd',
-      image: 'https://th.bing.com/th/id/OIP.gBbjm8Ald7qRzHwXVqy1AwAAAA?w=176&h=176&c=7&o=5&dpr=2&pid=1.7'
-    }
+    
   ];
 
   constructor(
     private navCtrl: NavController,
     private webService: WebserviceService,
-    private alerts: AlertsService
+    // private alerts: AlertsService
   ) {}
 
   viewPlayerDetails(player){
@@ -85,8 +65,8 @@ export class Tab2Page {
       const linku = 'players';
       this.webService.calling_GET_From_Api(linku).then((data: any) => {
         console.log(data);
-        if (data.length) {
-          this.playersList = data;
+        if (data.values.length) {
+          this.playersList = data.values;
         } else {
           // this.alerts.presentToast('No results found!', 'warning');
         }

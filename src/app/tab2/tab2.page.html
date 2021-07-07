@@ -19,12 +19,12 @@
           <ion-card *ngFor="let player of playersList">
             <ion-item lines="none" detail="true" button="true" (click)="viewPlayerDetails(player)">
               <ion-thumbnail style="zoom: 1.4;" slot="start">
-                <ion-img [src]="player.image"></ion-img>
+                <ion-img [src]="player.profilePicture ? player.profilePicture : environmenti.defailtProfilePicture"></ion-img>
               </ion-thumbnail>
               <div>
-                <h3 style="margin: 0;">{{ player?.firstName }} | {{ player?.birthday }} </h3>
-                <p style="margin: 0">{{ player?.description }}</p>
-                <p style="margin: 0; font-size: 10px;">{{ player?.id }}</p>
+                <h3 style="margin: 0;">{{ player?.firstName }} {{ player?.lastName }} | {{ player?.birthDate | date:"dd.MM.yyyy" }} </h3>
+                <p style="margin: 0">{{ player?.ageGroup ? 'Senior' : 'Junior' }} - {{ player?.playingPosition }}, {{ player?.nationality }}, {{ player?.birthTown }}</p>
+                <p style="margin: 0; font-size: 10px;">{{ player?.id }} | {{ player?.krfId }}</p>
               </div>
               <ion-buttons slot="end">
                 <ion-button (click)="$event.stopPropagation(); editPlayer(player)" >
