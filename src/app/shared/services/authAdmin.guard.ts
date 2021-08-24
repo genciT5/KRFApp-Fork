@@ -6,7 +6,7 @@ import { WebserviceService } from './webservice.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuardAdmin implements CanActivate {
   constructor(
       private navCtrl: NavController,
       private webService: WebserviceService
@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean {
       const user = this.webService.getIsAuthenticated();
       const userRole = this.webService._userData.userRole;
-      if (user && userRole == 'User') {
+      if (user && userRole == 'Admin') {
           // logged in so return true
           return true;
       } else {

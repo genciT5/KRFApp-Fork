@@ -1,11 +1,14 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs/tab2"></ion-back-button>
+      <ion-back-button ></ion-back-button>
     </ion-buttons>
     <ion-title>{{isEdit ? "Edit Player Data" : "Register a new player"}}</ion-title>
-    <ion-buttons *ngIf="!isEdit" slot="end">
-      <ion-button (click)="submitForm()">
+    <ion-buttons  slot="end">
+      <ion-button *ngIf="isNewPlayer || isUpdateRequest" (click)="declineReqOrNew()" color="danger">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button (click)="submitForm()" color="{{ createAndEditPlayerForm.valid ? 'success' : '' }}">
         <ion-icon slot="icon-only" name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -148,7 +151,7 @@
                 <ion-label position="floating">
                   Citizenship:
                 </ion-label>
-                <ion-input formControlName='nationality' type="text"> </ion-input>
+                <ion-input formControlName='citizenship' type="text"> </ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">
@@ -213,7 +216,7 @@
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Playing Position:</ion-label>
-                <ion-select formControlName="ageGroup">
+                <ion-select formControlName="playingPosition">
                   <ion-select-option value="1">Front Row</ion-select-option>
                   <ion-select-option value="2">Second Row</ion-select-option>
                   <ion-select-option value="3">Back Row</ion-select-option>
@@ -253,11 +256,11 @@
               </ion-item>
               <ion-item>
                 <ion-label>Player Declaration Signed</ion-label>
-                <ion-checkbox slot="end" formControlName="playerDeclarationSigned"></ion-checkbox>
+                <ion-checkbox slot="end" formControlName="hasSignedDeclaraiton"></ion-checkbox>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Signed Date</ion-label>
-                <ion-datetime formControlName="playerSignedDeclaration"></ion-datetime>
+                <ion-datetime formControlName="playerDeclarationSignedOn"></ion-datetime>
               </ion-item>
             </ion-card-content>
           </ion-card>
@@ -312,10 +315,10 @@
             <ion-label>Allow KRF To use Personal Data</ion-label>
             <ion-checkbox slot="end" formControlName="allowKRFToUsePersonalData"></ion-checkbox>
           </ion-item>
-          <ion-item>
-            <ion-label>Can KFR Use Data?</ion-label>
+          <!-- <ion-item>
+            <ion-label>Can KRF Use Data?</ion-label>
             <ion-checkbox slot="end" formControlName="canKRFUseData"></ion-checkbox>
-          </ion-item>
+          </ion-item> -->
 
 
           <!-- <ion-grid class="ion-text-center">

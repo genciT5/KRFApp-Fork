@@ -1,13 +1,22 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="clubId">
+      <ion-back-button defaultHref="admin/tabs/tab1-clubs"></ion-back-button>
+    </ion-buttons>
     <ion-title>
       Players List
     </ion-title>
+   
     <!-- <ion-buttons slot="end" >
       <ion-button (click)="createPlayer()">
         <ion-icon name="add" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons> -->
+    <ion-buttons slot="end" *ngIf="!clubId">
+      <ion-button color="danger" (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

@@ -5,9 +5,9 @@ import { PlayerDetailsPage } from './player-details.page';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: ':playerId',
     component: PlayerDetailsPage
-  }
+  },
 ];
 
 @NgModule({

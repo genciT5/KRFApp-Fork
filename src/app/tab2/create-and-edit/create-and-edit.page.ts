@@ -44,6 +44,11 @@ export class CreateAndEditPage implements OnInit {
   // public fileUploader: FileUploader = new FileUploader({});
   public hasBaseDropZoneOver: boolean = false;
 
+  // admin/updatePlayer
+  // 
+
+  isNewPlayer = false;
+  isUpdateRequest = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,6 +64,8 @@ export class CreateAndEditPage implements OnInit {
         this.isEdit = true;
            let navParams = this.router.getCurrentNavigation().extras.state;
            this.playerDetails = navParams.playerDetails;
+           this.isNewPlayer = navParams.isNewPlayer;
+           this.isUpdateRequest = navParams.isUpdateRequest;
            console.log(navParams);
       }
     });
@@ -98,7 +105,7 @@ export class CreateAndEditPage implements OnInit {
         updateOn: 'change',
         validators: [Validators.required]
       }),
-      nationality: new FormControl(this.isEdit ? this.playerDetails.nationality :'', {
+      citizenship: new FormControl(this.isEdit ? this.playerDetails.citizenship :'', {
         updateOn: 'change',
         validators: [Validators.required]
       }),
@@ -134,7 +141,7 @@ export class CreateAndEditPage implements OnInit {
         updateOn: 'change',
         validators: [Validators.required]
       }),
-      playingPosition: new FormControl(this.isEdit ? this.playerDetails.playingPosition :'', {
+      playingPosition: new FormControl(this.isEdit ? this.playerDetails.playingPosition.toString() : '', {
         updateOn: 'change',
         validators: [Validators.required]
       }),
@@ -198,22 +205,22 @@ export class CreateAndEditPage implements OnInit {
       //     validators: [Validators.required]
       //   }),
       // }),
-      playerDeclarationSigned: new FormControl(this.isEdit ? this.playerDetails.playerDeclarationSigned : false, {
+      hasSignedDeclaraiton: new FormControl(this.isEdit ? this.playerDetails.hasSignedDeclaraiton : false, {
         updateOn: 'change',
         validators: [Validators.required]
       }),
-      playerSignedDeclaration: new FormControl(this.isEdit ? this.playerDetails.playerSignedDeclaration : '', {
+      playerDeclarationSignedOn: new FormControl(this.isEdit ? this.playerDetails.playerDeclarationSignedOn : '', {
         updateOn: 'change',
         validators: [Validators.required]
       }),
       allowKRFToUsePersonalData: new FormControl(this.isEdit ? this.playerDetails.allowKRFToUsePersonalData : false, {
         updateOn: 'change',
-        validators: [Validators.required]
+        // validators: [Validators.required]
       }),
-      canKRFUseData: new FormControl(this.isEdit ? this.playerDetails.canKRFUseData : false, {
-        updateOn: 'change',
-        validators: [Validators.required]
-      }),
+      // canKRFUseData: new FormControl(this.isEdit ? this.playerDetails.canKRFUseData : false, {
+      //   updateOn: 'change',
+      //   // validators: [Validators.required]
+      // }),
     });
   }
 
@@ -286,7 +293,9 @@ export class CreateAndEditPage implements OnInit {
 
 
   submitForm(){
-    const linku = 'players';
+    let linku = `${this.isEdit ? 'players/update' : 'players'}`;
+   
+    console.log(this.createAndEditPlayerForm)
     if (this.createAndEditPlayerForm.invalid) {
       this.createAndEditPlayerForm.markAllAsTouched();
       return;
@@ -294,13 +303,24 @@ export class CreateAndEditPage implements OnInit {
     this.alerts.presentLoadingController();
     this.isEdit ? this.createAndEditPlayerForm.value['playerId'] = this.playerDetails.id : '';
     this.createAndEditPlayerForm.value.ageGroup = +this.createAndEditPlayerForm.value.ageGroup;
+    if (this.isNewPlayer) {
+        linku = `admin/confirmplayer`;
+       this.createAndEditPlayerForm.value['playerStatus'] = 2;
+    } 
+    if (this.isUpdateRequest) {
+        linku = 'admin/confirmplayer';
+       this.createAndEditPlayerForm.value['requestStatus'] = 0;
+    }
     this.webService.calling_Post_From_Api(linku, this.createAndEditPlayerForm.value).then((data: any) => {
       console.log(data);
       if (data.status) {
         this.alerts.presentToast('Player created successfully!', 'success');
         // this.createAndEditPlayerForm.reset();
-
-        this.navCtrl.navigateBack('tabs/tab2');
+        let backRoute = 'club/tabs/tab2';
+        if (this.isNewPlayer || this.isUpdateRequest) {
+          backRoute = `admin/tabs/${this.isNewPlayer ? 'new-players' : 'update-requests'}`
+        } 
+        this.navCtrl.navigateBack(backRoute);
         // this.isEdit = true;
       } else {
         this.alerts.presentToast('Something happend, please try again later!', 'danger');
@@ -312,7 +332,51 @@ export class CreateAndEditPage implements OnInit {
     });
   }
 
+  declineReqOrNew() {
+    this.alerts.presentCancelOrConfirm('Confirmation!', 'Are you sure you want to decline this request?', 'Cancel', 'DECLINE').then((data: any) => {
+      if (data) {
+        this.declineReqOrNewAPI();
+      }
+    });
+  }
 
+  declineReqOrNewAPI() {
+    let params = {
+      playerId: this.playerDetails.id
+    }
+    let linku = '';
+    if (this.isNewPlayer) {
+      linku = `admin/confirmplayer`;
+     params['playerStatus'] = 3;
+  } 
+  if (this.isUpdateRequest) {
+      linku = 'admin/confirmplayer';
+     params['requestStatus'] = 1;
+  }
+    this.webService.calling_Post_From_Api(linku, params).then((data: any) => {
+      console.log(data);
+      if (data.status) {
+        this.alerts.presentToast('Player not accepted!', 'success');
+        // this.createAndEditPlayerForm.reset();
+
+        this.navCtrl.navigateBack(`admin/tabs/${this.isNewPlayer ? 'new-players' : 'update-requests'}`);
+        // this.isEdit = true;
+      } else {
+        this.alerts.presentToast('Something happend, please try again later!', 'danger');
+      }
+      this.alerts.dismissLoadingController();
+    }).catch((err: any) => {
+      this.alerts.dismissLoadingController();
+      console.log(err);
+    });
+  }
+
+ // decline new player admin/confirmplayer {playerId edhe playerStatus 3}
+  // approve new player admin/confirmplayer {playerId edhe playerStatus 2}
+
+
+ // decline request admin/confirmplayer {requestId edhe requestStatus 1}
+ // approve request admin/confirmplayer {requestId edhe requestStatus 0}
 
     uploadFile(type) {
         const linku = 'players/uploadfiles';

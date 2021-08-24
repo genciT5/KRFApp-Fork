@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { Storage } from '@capacitor/storage';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +40,8 @@ export class WebserviceService {
 
   constructor(
     private apiService: ApiService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private alertController: AlertController
   ) { }
 
   get getHttpHeaders(){
@@ -118,4 +119,28 @@ export class WebserviceService {
     this.navCtrl.navigateRoot(['/auth']);
   }
 
+  async logoutAlert() {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: 'Are you sure you want to log out?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Log Out!',
+          handler: () => {
+            
+            this.logout();
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+}
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { AlertController, NavController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { WebserviceService } from '../shared/services/webservice.service';
 
@@ -18,11 +18,24 @@ export class Tab2Page {
     
   ];
 
+  clubId = null;
+
   constructor(
     private navCtrl: NavController,
     private webService: WebserviceService,
+    private alertController: AlertController,
+    private activatedRoute: ActivatedRoute
     // private alerts: AlertsService
-  ) {}
+  ) {
+    activatedRoute.params.subscribe(data => {
+      console.log(data);
+      this.clubId = data.clubId;
+    })
+  }
+
+  ionViewWillEnter(){
+    this.getPLayersList();
+  }
 
   viewPlayerDetails(player){
     // navigation extras to send data to other page
@@ -33,13 +46,13 @@ export class Tab2Page {
           }
         };
     
-        let ruti = `tabs/tab2/player-details/${player.id}`;
+        let ruti = `${this.clubId ? `admin/tabs/tab1-clubs/${this.clubId}/players/${player.id}` : `club/tabs/tab2/player-details/${player.id}`}`;
         this.navCtrl.navigateForward(ruti, navigationExtras)
     
   }
 
   createPlayer(){
-    this.navCtrl.navigateForward('tabs/tab2/create-and-edit');
+    this.navCtrl.navigateForward('club/tabs/tab2/create-and-edit');
   }
 
   editPlayer(playerDetails){
@@ -51,18 +64,16 @@ export class Tab2Page {
           }
         };
 
-        const ruti = 'tabs/tab2/create-and-edit';
+        const ruti = `${this.clubId ? `admin/tabs/tab1-clubs/${this.clubId}/edit-player/${playerDetails.id}` : `club/tabs/tab2/create-and-edit/${playerDetails.id}`}`;
         this.navCtrl.navigateForward(ruti, navigationExtras)
 
         // receiving params from navigation extras to the other page
   }
 
-  ionViewWillEnter(){
-    this.getPLayersList();
-  }
+ 
 
   getPLayersList() {
-      const linku = 'players';
+      const linku = `${!this.clubId ? 'players' : `admin/clubs/${this.clubId}/players`}`;
       this.webService.calling_GET_From_Api(linku).then((data: any) => {
         console.log(data);
         if (data.values.length) {
@@ -74,4 +85,9 @@ export class Tab2Page {
         console.log(err);
       });
     }
+
+   logout() {
+     this.webService.logoutAlert();
+   }
+
 }

@@ -43,8 +43,9 @@ export class AuthPage implements OnInit {
       this.webService.calling_Post_From_Api(linku, this.authForm.value).then((data: any) => {
         console.log(data);
         if (data) {
+          data['userRole'] = data.user.accessToken.payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
           this.webService.setUserData(data);
-          this.navCtrl.navigateRoot('tabs/tab1')
+          this.navCtrl.navigateRoot(data.user.accessToken.payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Admin' ? 'admin/tabs/tab1-clubs' : 'club/tabs/tab2')
         }
         this.alerts.dismissLoadingController();
       }).catch((err: any) => {
