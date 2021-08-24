@@ -90,6 +90,16 @@ export class WebserviceService {
     });
   }
 
+  calling_DELETE_from_API(link) {
+    return new Promise((resolve, reject) => {
+      this.apiService.delete(link, this.getHttpHeaders).subscribe((data: any) => {
+        resolve(data);
+      }, err => {
+        reject(err);
+      });
+    });
+  }
+
   
   calling_GET_From_Api(link, isPagination = false) {
     return new Promise((resolve, reject) => {

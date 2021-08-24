@@ -16,44 +16,84 @@
 
   <ion-grid>
 
-    <ion-row *ngIf="isEdit">
-      <ion-col size-xs="12" size-lg="4" >
-        <ion-card class="ion-text-center">
-          <ion-card-header>
-            <ion-card-title>Profile Picture</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-input [accept]="'.jpg, .png, .jpeg'" class="ion-text-center" type="file" (change)="fileSelector(1, $event)"></ion-input>
-            <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img>
-            <ion-button *ngIf="selectedProfilePicture" (click)="uploadFile(1)">Upload</ion-button>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size-xs="12" size-lg="4" >
-        <ion-card class="ion-text-center">
-          <ion-card-header>
-            <ion-card-title>Transfer Form Notification</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-input [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(2, $event)"></ion-input>
-            <!-- <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img> -->
-            <ion-button *ngIf="selectedTransferFormNotificationFile" (click)="uploadFile(2)">Upload</ion-button>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col size-xs="12" size-lg="4" >
-        <ion-card class="ion-text-center">
-          <ion-card-header>
-            <ion-card-title>World Rugby International Clearence Form</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-input [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(3, $event)"></ion-input>
-            <!-- <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img> -->
-            <ion-button *ngIf="selectedWorldRugbyIntClForm" (click)="uploadFile(3)">Upload</ion-button>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+    <ion-card *ngIf="isEdit">
+      <ion-card-header style="    padding: 15px 30px;">
+        <ion-card-title>Player Documents</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row >
+          <ion-col size-xs="12" size-lg="6" >
+            <ion-card class="ion-text-center" style="    min-height: 150px;">
+              <ion-card-header>
+                <ion-card-title>Profile Picture</ion-card-title>
+              </ion-card-header>
+              <ion-card-content class="ion-text-center">
+                <input id="selectProfilePicture" [accept]="'.jpg, .png, .jpeg'" class="ion-text-center" type="file" (change)="fileSelector(1, $event)" />
+                <ion-img style="width: 25%; margin: auto" *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img>
+                <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePicture" [src]="playerDetails?.profilePicture ? environmenti.apiBase + 'Files/' + playerDetails.profilePicture : environmenti.defaultProfilePicture"></ion-img>
+                <ion-button *ngIf="selectedProfilePicture" (click)="uploadFile(1)">Upload</ion-button>
+                <ion-button *ngIf="!playerDetails.profilePicture && !selectedProfilePicture"  onclick="document.getElementById('selectProfilePicture').click();"  color="primary" >Select Profile Picture</ion-button>
+                <ion-button *ngIf="selectedProfilePicture"  color="danger" (click)="selectedProfilePicture = null" >Clear</ion-button>
+                <ion-button *ngIf="playerDetails.profilePicture"  color="danger" (click)="deleteFileFromDB(0)" >Delete</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size-xs="12" size-lg="6" >
+            <ion-card class="ion-text-center"style="    min-height: 150px;">
+              <ion-card-header>
+                <ion-card-title>Transfer Form Notification</ion-card-title>
+              </ion-card-header>
+              <ion-card-content class="ion-text-center">
+                <input  id="selectTransferFormNotification" [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(2, $event)" />
+                <h3 *ngIf="selectedTransferFormNotificationFile">{{ selectedTransferFormNotificationFile.selectedFile.name }}</h3>
+                <h3 *ngIf="playerDetails.transferFormNotification" (click)="downloadFile(playerDetails.transferFormNotification)">{{ playerDetails.transferFormNotification }}</h3>
+                <!-- <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img> -->
+                <ion-button *ngIf="selectedTransferFormNotificationFile" (click)="uploadFile(2)">Upload</ion-button>
+                <ion-button *ngIf="!playerDetails.transferFormNotification && !selectedTransferFormNotificationFile"  onclick="document.getElementById('selectTransferFormNotification').click();"  color="primary" >Select</ion-button>
+                <ion-button *ngIf="selectedTransferFormNotificationFile"  color="danger" (click)="selectedTransferFormNotificationFile = null" >Clear</ion-button>
+                <ion-button *ngIf="playerDetails.transferFormNotification"  color="danger" (click)="deleteFileFromDB(0)" >Delete</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size-xs="12" size-lg="6" >
+            <ion-card class="ion-text-center" style="    min-height: 150px;">
+              <ion-card-header>
+                <ion-card-title>World Rugby International Clearence Form</ion-card-title>
+              </ion-card-header>
+              <ion-card-content class="ion-text-center">
+                <input  id="selectedWorldRugbyIntCl"  [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(3, $event)" />
+                <h3 *ngIf="selectedWorldRugbyIntClForm">{{ selectedWorldRugbyIntClForm.selectedFile.name }}</h3>
+                <h3 *ngIf="playerDetails.worldRugbyInternationalClearenceForm" (click)="downloadFile(playerDetails.worldRugbyInternationalClearenceForm)">{{ playerDetails.worldRugbyInternationalClearenceForm }}</h3>
+                <!-- <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img> -->
+                <ion-button *ngIf="selectedWorldRugbyIntClForm" (click)="uploadFile(3)">Upload</ion-button>
+                <ion-button *ngIf="!playerDetails.worldRugbyInternationalClearenceForm && !selectedWorldRugbyIntClForm"  onclick="document.getElementById('selectedWorldRugbyIntCl').click();"  color="primary" >Select</ion-button>
+                <ion-button *ngIf="selectedWorldRugbyIntClForm"  color="danger" (click)="selectedWorldRugbyIntClForm = null" >Clear</ion-button>
+                <ion-button *ngIf="playerDetails.worldRugbyInternationalClearenceForm"  color="danger" (click)="deleteFileFromDB(3)" >Delete</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size-xs="12" size-lg="6" >
+            <ion-card class="ion-text-center" style="    min-height: 150px;">
+              <ion-card-header>
+                <ion-card-title>Health Document</ion-card-title>
+              </ion-card-header>
+              <ion-card-content class="ion-text-center">
+                <input  id="selectedHealthDoc"  [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(4, $event)" />
+                <h3 *ngIf="selectedHealthDocument">{{ selectedHealthDocument.selectedFile.name }}</h3>
+                <h3 *ngIf="playerDetails.medicalStatement" (click)="downloadFile(playerDetails.medicalStatement)">{{ playerDetails.medicalStatement }}</h3>
+                <!-- <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img> -->
+                <ion-button *ngIf="selectedHealthDocument" (click)="uploadFile(4)">Upload</ion-button>
+                <ion-button *ngIf="!playerDetails.medicalStatement && !selectedHealthDocument"  onclick="document.getElementById('selectedHealthDoc').click();"  color="primary" >Select</ion-button>
+                <ion-button *ngIf="selectedHealthDocument"  color="danger" (click)="selectedHealthDocument = null" >Clear</ion-button>
+                <ion-button *ngIf="playerDetails.medicalStatement"  color="danger" (click)="deleteFileFromDB(3)" >Delete</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    
+
+  </ion-card>
     <ion-row>
       <ion-col size-xs="12" size-lg="6" offset-lg="3"> 
         <form [formGroup]="createAndEditPlayerForm" (ngSubmit)="submitForm()">
@@ -63,131 +103,166 @@
               <ion-select-option>awd</ion-select-option>
             </ion-select>
           </ion-item> -->
-          <ion-item>
-            <ion-label position="floating">
-              First Name:
-            </ion-label>
-            <ion-input formControlName='firstName' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Middle Name:
-            </ion-label>
-            <ion-input formControlName='middleName' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Last Name:
-            </ion-label>
-            <ion-input formControlName='lastName' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Age Group</ion-label>
-            <ion-select formControlName="ageGroup">
-              <ion-select-option value="0">Junior</ion-select-option>
-              <ion-select-option value="1">Senior</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Birth Town:
-            </ion-label>
-            <ion-input formControlName='birthTown' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Birth Country:
-            </ion-label>
-            <ion-input formControlName='birthCountry' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Nationality:
-            </ion-label>
-            <ion-input formControlName='nationality' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              City:
-            </ion-label>
-            <ion-input formControlName='city' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Country:
-            </ion-label>
-            <ion-input formControlName='country' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Postal Code:
-            </ion-label>
-            <ion-input formControlName='postalCode' type="number"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Street Address:
-            </ion-label>
-            <ion-input formControlName='streetAddress' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Address:
-            </ion-label>
-            <ion-input formControlName='address' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Birthdate</ion-label>
-            <ion-datetime formControlName="birthDate"></ion-datetime>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Phone Number:
-            </ion-label>
-            <ion-input formControlName='phoneNumber' type="number"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Personal Number:
-            </ion-label>
-            <ion-input formControlName='personalNumber' type="number"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Playing Position:
-            </ion-label>
-            <ion-input formControlName='playingPosition' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Can Represent Kosovo</ion-label>
-            <ion-checkbox slot="end" formControlName="canRepresanteKosovo"></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label>Is Player coming from the Juridiction of another Union?</ion-label>
-            <ion-checkbox slot="end" formControlName="isPlayerCommingFromTheJuridictionOfAnOtherUnion"></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Previous Club Name:
-            </ion-label>
-            <ion-input formControlName='previousClubName' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Previous Club Union:
-            </ion-label>
-            <ion-input formControlName='previousClubUnion' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">
-              Previous Club Registered:
-            </ion-label>
-            <ion-input formControlName='previousClubRegistered' type="text"> </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Previous Club Leaving Date</ion-label>
-            <ion-datetime formControlName="previousClubLeavingDate"></ion-datetime>
-          </ion-item>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Personal Informations</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="floating">
+                  First Name:
+                </ion-label>
+                <ion-input formControlName='firstName' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Middle Name:
+                </ion-label>
+                <ion-input formControlName='middleName' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Last Name:
+                </ion-label>
+                <ion-input formControlName='lastName' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Father Name:
+                </ion-label>
+                <ion-input formControlName='fatherName' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Birth Town:
+                </ion-label>
+                <ion-input formControlName='birthTown' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Birth Country:
+                </ion-label>
+                <ion-input formControlName='birthCountry' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Citizenship:
+                </ion-label>
+                <ion-input formControlName='nationality' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  City:
+                </ion-label>
+                <ion-input formControlName='city' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Country:
+                </ion-label>
+                <ion-input formControlName='country' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Postal Code:
+                </ion-label>
+                <ion-input formControlName='postalCode' type="number"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Street Address:
+                </ion-label>
+                <ion-input formControlName='streetAddress' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Address:
+                </ion-label>
+                <ion-input formControlName='address' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Birthdate</ion-label>
+                <ion-datetime formControlName="birthDate"></ion-datetime>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Phone Number:
+                </ion-label>
+                <ion-input formControlName='phoneNumber' type="number"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Personal Number:
+                </ion-label>
+                <ion-input formControlName='personalNumber' type="number"> </ion-input>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+          
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Team Information</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="floating">Age Group</ion-label>
+                <ion-select formControlName="ageGroup">
+                  <ion-select-option value="0">Junior</ion-select-option>
+                  <ion-select-option value="1">Senior</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Playing Position:</ion-label>
+                <ion-select formControlName="ageGroup">
+                  <ion-select-option value="1">Front Row</ion-select-option>
+                  <ion-select-option value="2">Second Row</ion-select-option>
+                  <ion-select-option value="3">Back Row</ion-select-option>
+                  <ion-select-option value="4">Back</ion-select-option>
+                </ion-select>
+              </ion-item>
+            
+              <ion-item>
+                <ion-label>Can Represent Kosovo</ion-label>
+                <ion-checkbox slot="end" formControlName="canRepresanteKosovo"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Is Player coming from the Juridiction of another Union?</ion-label>
+                <ion-checkbox slot="end" formControlName="isPlayerCommingFromTheJuridictionOfAnOtherUnion"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Previous Club Name:
+                </ion-label>
+                <ion-input formControlName='previousClubName' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Previous Club Union:
+                </ion-label>
+                <ion-input formControlName='previousClubUnion' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Previous Club Registered:
+                </ion-label>
+                <ion-input formControlName='previousClubRegistered' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Previous Club Leaving Date</ion-label>
+                <ion-datetime formControlName="previousClubLeavingDate"></ion-datetime>
+              </ion-item>
+              <ion-item>
+                <ion-label>Player Declaration Signed</ion-label>
+                <ion-checkbox slot="end" formControlName="playerDeclarationSigned"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Signed Date</ion-label>
+                <ion-datetime formControlName="playerSignedDeclaration"></ion-datetime>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+        
           <!-- <ion-item>
             <ion-label position="floating">
               Transfer Form Notification:
@@ -232,14 +307,7 @@
             </ion-item>
             
           </div> -->
-          <ion-item>
-            <ion-label>Player Declaration Signed</ion-label>
-            <ion-checkbox slot="end" formControlName="playerDeclarationSigned"></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Signed Date</ion-label>
-            <ion-datetime formControlName="playerSignedDeclaration"></ion-datetime>
-          </ion-item>
+          
           <ion-item>
             <ion-label>Allow KRF To use Personal Data</ion-label>
             <ion-checkbox slot="end" formControlName="allowKRFToUsePersonalData"></ion-checkbox>

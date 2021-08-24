@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, NavController } from '@ionic/angular';
 // import { FileLikeObject, FileUploader } from 'ng2-file-upload';
 import { Subject } from 'rxjs';
 import { AlertsService } from 'src/app/shared/services/alerts.service';
 import { ImageServiceService } from 'src/app/shared/services/image-service.service';
 import { PublicService } from 'src/app/shared/services/public.service';
 import { WebserviceService } from 'src/app/shared/services/webservice.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-create-and-edit',
@@ -16,6 +17,7 @@ import { WebserviceService } from 'src/app/shared/services/webservice.service';
 })
 export class CreateAndEditPage implements OnInit {
 
+  environmenti = environment;
   isEdit = false;
   playerDetails: any = null;
 
@@ -24,6 +26,14 @@ export class CreateAndEditPage implements OnInit {
   selectedProfilePicture = null;
   selectedTransferFormNotificationFile = null;
   selectedWorldRugbyIntClForm = null;
+  selectedHealthDocument = null;
+
+  hasUploaded = {
+    selectedProfilePicture: false,
+    selectedTransferFormNotificationFile: false,
+    selectedWorldRugbyIntClForm: false,
+    selectedHealthDocument: false
+  }
 
   base64img = null;
 
@@ -41,7 +51,8 @@ export class CreateAndEditPage implements OnInit {
     private webService: WebserviceService,
     private alerts: AlertsService,
     public imageService: ImageServiceService,
-    public publicService: PublicService
+    public publicService: PublicService,
+    private navCtrl: NavController
   ) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -64,6 +75,10 @@ export class CreateAndEditPage implements OnInit {
         validators: [Validators.required]
       }),
       middleName: new FormControl(this.isEdit ? this.playerDetails.middleName :'', {
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+      fatherName: new FormControl(this.isEdit ? this.playerDetails.firstName :'', {
         updateOn: 'change',
         validators: [Validators.required]
       }),
@@ -247,6 +262,8 @@ export class CreateAndEditPage implements OnInit {
     } else if (type == 3) {
       this.selectedWorldRugbyIntClForm = {selectedFile: event.target.files[0], base64: ab}
       
+    } else if (type == 4) {
+      this.selectedHealthDocument = {selectedFile: event.target.files[0], base64: ab}
     }
 
   }
@@ -282,8 +299,9 @@ export class CreateAndEditPage implements OnInit {
       if (data.status) {
         this.alerts.presentToast('Player created successfully!', 'success');
         // this.createAndEditPlayerForm.reset();
-        // this.router.navigateByUrl('tabs/tab2');
-        this.isEdit = true;
+
+        this.navCtrl.navigateBack('tabs/tab2');
+        // this.isEdit = true;
       } else {
         this.alerts.presentToast('Something happend, please try again later!', 'danger');
       }
@@ -314,12 +332,65 @@ export class CreateAndEditPage implements OnInit {
         if (type == 3) {
           formData.append('WorldRugbyInternationalClearenceForm', this.selectedWorldRugbyIntClForm.selectedFile);
         }
+        
+        if (type == 4) {
+          formData.append('selectedHealthDocument', this.selectedHealthDocument.selectedFile);
+        }
           
+    this.alerts.presentLoadingController();
         this.webService.calling_Post_From_Api(linku, formData, true).then((data: any) => {
           console.log(data);
+          if (type == 1) { 
+            this.hasUploaded.selectedProfilePicture = true;
+          } else if (type == 2) {
+            this.hasUploaded.selectedTransferFormNotificationFile = true;
+            
+          } else if (type == 3) {
+            this.hasUploaded.selectedWorldRugbyIntClForm = true;
+            
+          } else if (type == 4) {
+            this.hasUploaded.selectedHealthDocument = true;
+
+          }
+          this.alerts.presentToast('Successfully uploaded. To see the uploaded file you have to open player details!', 'success', 5000);
+          this.alerts.dismissLoadingController();
         }).catch((err: any) => {
+          this.alerts.dismissLoadingController();
           console.log(err);
         });
       }
 
+      async deleteFileFromDB(type) {
+        this.alerts.presentCancelOrConfirm('Confirmation!!', 'Are you sure you want to delete the selected file?', 'Cancel', 'DELETE').then(data => {
+          if (data) {
+            const linku = `players/uploadfiles/${type}`;
+            this.webService.calling_DELETE_from_API(linku).then((data: any) => {
+              console.log(data);
+              if (type == 1) { 
+                this.hasUploaded.selectedProfilePicture = true;
+              } else if (type == 2) {
+                this.hasUploaded.selectedTransferFormNotificationFile = true;
+                
+              } else if (type == 3) {
+                this.hasUploaded.selectedWorldRugbyIntClForm = true;
+                
+              } else if (type == 4) {
+                this.hasUploaded.selectedHealthDocument = true;
+    
+              }
+              this.alerts.presentToast('Successfully uploaded. To see the uploaded file you have to open player details!', 'success', 5000);
+              this.alerts.dismissLoadingController();
+            }).catch((err: any) => {
+              this.alerts.dismissLoadingController();
+              console.log(err);
+            });
+          }
+        })
+        
+      }
+
+      downloadFile(fileName) {
+        const url = this.environmenti.apiBase + 'Files/' + fileName;
+        window.open(url, "_blank");
+      }
 }

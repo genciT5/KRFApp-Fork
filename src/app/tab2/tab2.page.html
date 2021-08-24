@@ -18,13 +18,67 @@
     </ion-fab-button>
   </ion-fab>
   <ion-grid>
-    <ion-row>
+    <ion-row >
+      <ion-col size-lg="6" >
+        <ion-grid class="ion-padding ion-text-center">
+          <h3>Juniors</h3>
+        </ion-grid>
+        <ion-list>
+          <div *ngFor="let player of playersList">
+            <ion-card *ngIf="player.ageGroup == 0">
+              <ion-item lines="none" detail="true" button="true" (click)="viewPlayerDetails(player)">
+                <ion-thumbnail style="zoom: 1.4;" slot="start">
+                  <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' +  player.profilePicture : environmenti.defaultProfilePicture"></ion-img>
+                </ion-thumbnail>
+                <div>
+                  <h3 style="margin: 0;">{{ player?.firstName }} {{ player?.lastName }} | {{ player?.birthDate | date:"dd.MM.yyyy" }} </h3>
+                  <p style="margin: 0">{{ player?.ageGroup ? 'Senior' : 'Junior' }} - {{ player?.playingPosition }}, {{ player?.nationality }}, {{ player?.birthTown }}</p>
+                  <p style="margin: 0; font-size: 10px;">{{ player?.id }} | {{ player?.krfId }}</p>
+                </div>
+                <ion-buttons slot="end">
+                  <ion-button *ngIf="player.status == 0" (click)="$event.stopPropagation(); editPlayer(player)" >
+                    <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-item>
+            </ion-card>
+          </div>
+      </ion-list>
+      </ion-col>
+      <ion-col  size-lg="6">
+
+        <ion-grid class="ion-padding ion-text-center">
+          <h3>Seniors</h3>
+        </ion-grid>
+        <div *ngFor="let player of playersList">
+          <ion-card *ngIf="player.ageGroup == 1">
+            <ion-item lines="none" detail="true" button="true" (click)="viewPlayerDetails(player)">
+              <ion-thumbnail style="zoom: 1.4;" slot="start">
+                <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' +  player.profilePicture : environmenti.defaultProfilePicture"></ion-img>
+              </ion-thumbnail>
+              <div>
+                <h3 style="margin: 0;">{{ player?.firstName }} {{ player?.lastName }} | {{ player?.birthDate | date:"dd.MM.yyyy" }} </h3>
+                <p style="margin: 0">{{ player?.ageGroup ? 'Senior' : 'Junior' }} - {{ player?.playingPosition }}, {{ player?.nationality }}, {{ player?.birthTown }}</p>
+                <p style="margin: 0; font-size: 10px;">{{ player?.id }} | {{ player?.krfId }}</p>
+              </div>
+              <ion-buttons slot="end">
+                <ion-button  (click)="$event.stopPropagation(); editPlayer(player)" >
+                  <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item>
+          </ion-card>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+     
       <ion-col size-xs="12" size-lg="8" offset-lg="2">
         <ion-list>
           <ion-card *ngFor="let player of playersList">
             <ion-item lines="none" detail="true" button="true" (click)="viewPlayerDetails(player)">
               <ion-thumbnail style="zoom: 1.4;" slot="start">
-                <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' +  player.profilePicture : environmenti.defailtProfilePicture"></ion-img>
+                <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' +  player.profilePicture : environmenti.defaultProfilePicture"></ion-img>
               </ion-thumbnail>
               <div>
                 <h3 style="margin: 0;">{{ player?.firstName }} {{ player?.lastName }} | {{ player?.birthDate | date:"dd.MM.yyyy" }} </h3>
@@ -40,7 +94,7 @@
           </ion-card>
         </ion-list>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 
 </ion-content>
