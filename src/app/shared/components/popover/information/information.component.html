@@ -1,0 +1,13 @@
+
+
+<ion-grid class="ion-padding">
+  <h6>Player Statuses</h6>
+</ion-grid>
+<ion-list>
+  <ion-item *ngFor="let color of statusColors">
+    <ion-icon style="margin: 5px" slot="start" name="ellipse" color="{{ color.color }}"></ion-icon>
+    <div>
+      <p>{{ color.text }}</p>
+    </div>
+  </ion-item>
+</ion-list>

@@ -31,7 +31,7 @@
                 <ion-card-title>Profile Picture</ion-card-title>
               </ion-card-header>
               <ion-card-content class="ion-text-center">
-                <p>Neutral background, standard should - head picture.</p>
+                <p>Neutral background, standard shoulder-head picture.</p>
                 <input id="selectProfilePicture" [accept]="'.jpg, .png, .jpeg'" class="ion-text-center" type="file" (change)="fileSelector(1, $event)" />
                 <ion-img style="width: 25%; margin: auto" *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img>
                 <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePicture" [src]="playerDetails?.profilePicture ? environmenti.apiBase + 'Files/' + playerDetails.profilePicture : environmenti.defaultProfilePicture"></ion-img>
@@ -138,7 +138,7 @@
               </ion-item>
               <ion-item>
                 <ion-label position="floating">
-                  Birth Town:
+                  Email:
                 </ion-label>
                 <ion-input formControlName='email' type="text"> </ion-input>
               </ion-item>

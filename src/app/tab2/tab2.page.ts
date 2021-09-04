@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, PopoverController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { InformationComponent } from '../shared/components/popover/information/information.component';
+import { PlayerStatusesENUMS } from '../shared/enums';
+import { AlertsService } from '../shared/services/alerts.service';
+import { PublicService } from '../shared/services/public.service';
 import { WebserviceService } from '../shared/services/webservice.service';
 
 
@@ -20,11 +24,16 @@ export class Tab2Page {
 
   clubId = null;
 
+  playerStatusesENUMS = PlayerStatusesENUMS;
+
   constructor(
     private navCtrl: NavController,
     private webService: WebserviceService,
     private alertController: AlertController,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public publicServices: PublicService,
+    private popoverController: PopoverController,
+    private alerts: AlertsService
     // private alerts: AlertsService
   ) {
     activatedRoute.params.subscribe(data => {
@@ -33,8 +42,34 @@ export class Tab2Page {
     })
   }
 
+    async showInformations() {
+      const popover = await this.popoverController.create({
+        component: InformationComponent,
+        translucent: false
+      });
+    
+      await popover.present();
+    }
   ionViewWillEnter(){
     this.getPLayersList();
+  }
+
+  deletePlayer(playerId) {
+    this.alerts.presentCancelOrConfirm('WARNING!', 'Are you sure you want to delete this player? Thre is no returning back!!!!', 'CANCEL', 'DELETE').then((data: any) => {
+      if(data) {
+        this.webService.calling_DELETE_from_API(`player/delete/${playerId}`).then((data: any) => {
+          if(data.status) {
+            this.alerts.presentToast('Player deleted successfully!', 'success');
+          } else {
+            this.alerts.presentToast(data.message, 'danger');
+    
+          }
+        }).catch(err => {
+          console.log(err);
+        })
+
+      }
+    })
   }
 
   viewPlayerDetails(player){

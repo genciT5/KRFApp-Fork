@@ -41,3 +41,36 @@ h1, h2, h3, h4, h5, h6, p {
         font-size: 10px;
     }
 }
+
+// .approvedClass {
+//     ion-item {
+//         --background: transparent;
+//     }
+//     box-shadow: 0 0 2px 2px rgba(0, 255, 89, 0.5);
+// }
+
+// .pendingClass {
+//     ion-item {
+//         --background: transparent;
+//     }
+//     box-shadow: 0 0 2px 2px rgba(255, 226, 9, 0.5);
+// }
+// .rejectedClass {
+//     ion-item {
+//         --background: transparent;
+//     }
+//     box-shadow: 0 0 2px 2px rgba(255, 0, 0, 0.5);
+// }
+// .updateRequestPendingClass {
+//     ion-item {
+//         --background: transparent;
+//     }
+//     box-shadow: 0 0 2px 2px rgba(29, 251, 255, 0.5);
+// }
+
+
+.iconDotStyle {
+    margin: 0;
+    zoom: 0.7;
+    margin-right: 15px;
+}
