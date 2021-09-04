@@ -2,8 +2,8 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-// const apiLink = 'https://localhost:5001/';
-const apiLink = 'https://krf.azurewebsites.net/';
+const apiLink = 'https://localhost:5001/';
+// const apiLink = 'https://krf.azurewebsites.net/';
 
 export const environment = {
   production: true,

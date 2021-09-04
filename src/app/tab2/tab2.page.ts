@@ -57,9 +57,10 @@ export class Tab2Page {
   deletePlayer(playerId) {
     this.alerts.presentCancelOrConfirm('WARNING!', 'Are you sure you want to delete this player? Thre is no returning back!!!!', 'CANCEL', 'DELETE').then((data: any) => {
       if(data) {
-        this.webService.calling_DELETE_from_API(`player/delete/${playerId}`).then((data: any) => {
+        this.webService.calling_DELETE_from_API(`players/delete/${playerId}`).then((data: any) => {
           if(data.status) {
             this.alerts.presentToast('Player deleted successfully!', 'success');
+            this.getPLayersList();
           } else {
             this.alerts.presentToast(data.message, 'danger');
     
