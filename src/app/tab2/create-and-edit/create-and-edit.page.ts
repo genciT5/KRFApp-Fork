@@ -309,7 +309,7 @@ export class CreateAndEditPage implements OnInit {
     } 
     if (this.isUpdateRequest) {
         linku = 'admin/confirmplayer';
-       this.createAndEditPlayerForm.value['requestStatus'] = 0;
+       this.createAndEditPlayerForm.value['updateRequestStatus'] = 0;
     }
     this.webService.calling_Post_From_Api(linku, this.createAndEditPlayerForm.value).then((data: any) => {
       console.log(data);
@@ -351,7 +351,7 @@ export class CreateAndEditPage implements OnInit {
   } 
   if (this.isUpdateRequest) {
       linku = 'admin/confirmplayer';
-     params['requestStatus'] = 1;
+     params['updateRequestStatus'] = 1;
   }
     this.webService.calling_Post_From_Api(linku, params).then((data: any) => {
       console.log(data);
