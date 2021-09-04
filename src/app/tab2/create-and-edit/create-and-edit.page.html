@@ -31,6 +31,7 @@
                 <ion-card-title>Profile Picture</ion-card-title>
               </ion-card-header>
               <ion-card-content class="ion-text-center">
+                <p>Neutral background, standard should - head picture.</p>
                 <input id="selectProfilePicture" [accept]="'.jpg, .png, .jpeg'" class="ion-text-center" type="file" (change)="fileSelector(1, $event)" />
                 <ion-img style="width: 25%; margin: auto" *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img>
                 <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePicture" [src]="playerDetails?.profilePicture ? environmenti.apiBase + 'Files/' + playerDetails.profilePicture : environmenti.defaultProfilePicture"></ion-img>
@@ -139,6 +140,12 @@
                 <ion-label position="floating">
                   Birth Town:
                 </ion-label>
+                <ion-input formControlName='email' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Birth Town:
+                </ion-label>
                 <ion-input formControlName='birthTown' type="text"> </ion-input>
               </ion-item>
               <ion-item>
@@ -231,6 +238,12 @@
               <ion-item>
                 <ion-label>Is Player coming from the Juridiction of another Union?</ion-label>
                 <ion-checkbox slot="end" formControlName="isPlayerCommingFromTheJuridictionOfAnOtherUnion"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Previous Registration Number:
+                </ion-label>
+                <ion-input formControlName='previousRegistrationNumber' type="text"> </ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">

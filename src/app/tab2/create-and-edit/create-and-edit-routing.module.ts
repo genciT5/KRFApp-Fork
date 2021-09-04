@@ -5,6 +5,10 @@ import { CreateAndEditPage } from './create-and-edit.page';
 
 const routes: Routes = [
   {
+    path: '',
+    component: CreateAndEditPage
+  },
+  {
     path: ':playerId',
     component: CreateAndEditPage
   }

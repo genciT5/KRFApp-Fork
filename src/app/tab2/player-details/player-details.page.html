@@ -4,6 +4,15 @@
       <ion-back-button defaultHref="tabs/tab2"></ion-back-button>
     </ion-buttons>
     <ion-title>Player ID: {{ player?.id }}</ion-title>
+    <ion-buttons slot="end">
+
+      <ion-button *ngIf="isNewPlayer" (click)="declineReqOrNew()" color="danger">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="isNewPlayer" (click)="submitForm()">
+        <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -121,9 +130,9 @@
                 <ion-col style="padding: 0;" size="6"><p>World Rugby International Clearence Form</p></ion-col>
                 <ion-col style="padding: 0;" size="6"><p>{{ player?.worldRugbyInternationalClearenceForm }}</p></ion-col>
               </ion-row>
-              <ion-row class="hoverStyle" (click)="downloadFile(player?.selectedHealthDocument)">
+              <ion-row class="hoverStyle" (click)="downloadFile(player?.medicalStatement)">
                 <ion-col style="padding: 0;" size="6"><p>Health Document</p></ion-col>
-                <ion-col style="padding: 0;" size="6"><p>{{ player?.selectedHealthDocument }}</p></ion-col>
+                <ion-col style="padding: 0;" size="6"><p>{{ player?.medicalStatement }}</p></ion-col>
               </ion-row>
               <ion-row>
                 <ion-col style="padding: 0;" size="6"><p>Player Declaration Signed</p></ion-col>

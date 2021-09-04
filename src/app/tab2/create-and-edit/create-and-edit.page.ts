@@ -97,6 +97,10 @@ export class CreateAndEditPage implements OnInit {
         updateOn: 'change',
         validators: [Validators.required]
       }),
+      email: new FormControl(this.isEdit ? this.playerDetails.email :'', {
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
       birthTown: new FormControl(this.isEdit ? this.playerDetails.birthTown :'', {
         updateOn: 'change',
         validators: [Validators.required]
@@ -134,6 +138,10 @@ export class CreateAndEditPage implements OnInit {
         validators: [Validators.required]
       }),
       phoneNumber: new FormControl(this.isEdit ? this.playerDetails.phoneNumber :'', {
+        updateOn: 'change',
+        validators: [Validators.required]
+      }),
+      previousRegistrationNumber: new FormControl(this.isEdit ? this.playerDetails.previousRegistrationNumber :'', {
         updateOn: 'change',
         validators: [Validators.required]
       }),
@@ -308,8 +316,9 @@ export class CreateAndEditPage implements OnInit {
        this.createAndEditPlayerForm.value['playerStatus'] = 2;
     } 
     if (this.isUpdateRequest) {
-        linku = 'admin/confirmplayer';
+        linku = 'admin/updateplayer';
        this.createAndEditPlayerForm.value['updateRequestStatus'] = 0;
+       this.createAndEditPlayerForm.value['requestId'] = this.playerDetails.id;
     }
     this.webService.calling_Post_From_Api(linku, this.createAndEditPlayerForm.value).then((data: any) => {
       console.log(data);
@@ -350,8 +359,9 @@ export class CreateAndEditPage implements OnInit {
      params['playerStatus'] = 3;
   } 
   if (this.isUpdateRequest) {
-      linku = 'admin/confirmplayer';
+      linku = 'admin/updateplayer';
      params['updateRequestStatus'] = 1;
+     params['requestId'] = this.playerDetails.id;
   }
     this.webService.calling_Post_From_Api(linku, params).then((data: any) => {
       console.log(data);
@@ -398,7 +408,7 @@ export class CreateAndEditPage implements OnInit {
         }
         
         if (type == 4) {
-          formData.append('selectedHealthDocument', this.selectedHealthDocument.selectedFile);
+          formData.append('medicalStatement', this.selectedHealthDocument.selectedFile);
         }
           
     this.alerts.presentLoadingController();
@@ -427,8 +437,8 @@ export class CreateAndEditPage implements OnInit {
       async deleteFileFromDB(type) {
         this.alerts.presentCancelOrConfirm('Confirmation!!', 'Are you sure you want to delete the selected file?', 'Cancel', 'DELETE').then(data => {
           if (data) {
-            const linku = `players/uploadfiles/${type}`;
-            this.webService.calling_DELETE_from_API(linku).then((data: any) => {
+            const linku = `players/deletefile`;
+            this.webService.calling_Post_From_Api(linku, {file_type: type, playerId: this.playerDetails.id}).then((data: any) => {
               console.log(data);
               if (type == 1) { 
                 this.hasUploaded.selectedProfilePicture = true;

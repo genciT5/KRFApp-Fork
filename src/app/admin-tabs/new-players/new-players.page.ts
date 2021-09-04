@@ -39,12 +39,12 @@ export class NewPlayersPage implements OnInit {
   selectPlayer(playerDetails) {
     const navigationExtras: NavigationExtras = {
       state: {
-        playerDetails,
+        player: playerDetails,
         isNewPlayer: true,
       }
     };
 
-    const ruti = `admin/tabs/new-players/edit-player/${playerDetails.id}`;
+    const ruti = `admin/tabs/new-players/player-details/${playerDetails.id}`;
     this.navCtrl.navigateForward(ruti, navigationExtras)
   }
 

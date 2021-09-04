@@ -9,9 +9,9 @@ const routes: Routes = [
     component: NewPlayersPage
   },
   {
-    path: 'edit-player',
-    loadChildren: () => import('../../tab2/create-and-edit/create-and-edit.module').then(m => m.CreateAndEditPageModule)
-  }
+    path: 'player-details',
+    loadChildren: () => import('../../tab2/player-details/player-details.module').then( m => m.PlayerDetailsPageModule)
+  },
 ];
 
 @NgModule({

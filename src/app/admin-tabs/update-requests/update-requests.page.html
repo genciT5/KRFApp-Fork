@@ -11,10 +11,10 @@
       <ion-col size-xs="12" size-lg="8" offset-lg="2">
         <ion-card *ngFor="let player of playersList" button="true" (click)="selectPlayer(player)">
           <ion-item lines="none" detail="true">
-            <ion-thumbnail style="zoom: 1.4;" slot="start">
+            <ion-avatar  slot="start">
               <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' +  player.profilePicture : environmenti.defaultProfilePicture"></ion-img>
-            </ion-thumbnail>
-            <div>
+            </ion-avatar>
+            <div class="playerDetailsOnLists">
               <p><strong>{{ player.firstName }} {{ player.lastName }}</strong></p>
               <p>{{ player.club.officialName }}</p>
               <p>{{ player.club.email }}</p>
