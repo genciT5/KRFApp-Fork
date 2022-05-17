@@ -83,7 +83,7 @@ export class CreateAndEditPage implements OnInit {
       }),
       middleName: new FormControl(this.isEdit ? this.playerDetails.middleName :'', {
         updateOn: 'change',
-        validators: [Validators.required]
+        // validators: [Validators.required]
       }),
       fatherName: new FormControl(this.isEdit ? this.playerDetails.firstName :'', {
         updateOn: 'change',
@@ -143,7 +143,7 @@ export class CreateAndEditPage implements OnInit {
       }),
       previousRegistrationNumber: new FormControl(this.isEdit ? this.playerDetails.previousRegistrationNumber :'', {
         updateOn: 'change',
-        validators: [Validators.required]
+        // validators: [Validators.required]
       }),
       personalNumber: new FormControl(this.isEdit ? this.playerDetails.personalNumber :'', {
         updateOn: 'change',
@@ -155,27 +155,27 @@ export class CreateAndEditPage implements OnInit {
       }),
       canRepresanteKosovo: new FormControl(this.isEdit ? this.playerDetails.canRepresanteKosovo : false, {
         updateOn: 'change',
-        validators: [Validators.required]
+        // validators: [Validators.required]
       }),
       isPlayerCommingFromTheJuridictionOfAnOtherUnion: new FormControl(this.isEdit ? this.playerDetails.isPlayerCommingFromTheJuridictionOfAnOtherUnion : false, {
         updateOn: 'change',
-        validators: [Validators.required]
+        // validators: [Validators.required]
       }),
       previousClubName: new FormControl(this.isEdit ? this.playerDetails.previousClubName :'', {
         updateOn: 'change',
-        validators: [Validators.required]
+        // validators: [Validators.required]
       }),
       previousClubUnion: new FormControl(this.isEdit ? this.playerDetails.previousClubUnion :'', {
         updateOn: 'change',
-        validators: [Validators.required]
+        // validators: [Validators.required]
       }),
       previousClubRegistered: new FormControl(this.isEdit ? this.playerDetails.previousClubRegistered  :'', {
         updateOn: 'change',
-        validators: [Validators.required]
+        // validators: [Validators.required]
       }),
       previousClubLeavingDate: new FormControl(this.isEdit ? this.playerDetails.previousClubLeavingDate :'', {
         updateOn: 'change',
-        validators: [Validators.required]
+        // validators: [Validators.required]
       }),
       // transferFormNotification: new FormControl(this.isEdit ? '' :'', {
       //   updateOn: 'change',
@@ -219,7 +219,7 @@ export class CreateAndEditPage implements OnInit {
       }),
       playerDeclarationSignedOn: new FormControl(this.isEdit ? this.playerDetails.playerDeclarationSignedOn : '', {
         updateOn: 'change',
-        validators: [Validators.required]
+        // validators: [Validators.required]
       }),
       allowKRFToUsePersonalData: new FormControl(this.isEdit ? this.playerDetails.allowKRFToUsePersonalData : false, {
         updateOn: 'change',

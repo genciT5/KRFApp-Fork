@@ -34,7 +34,8 @@
                 <p>Neutral background, standard shoulder-head picture.</p>
                 <input id="selectProfilePicture" [accept]="'.jpg, .png, .jpeg'" class="ion-text-center" type="file" (change)="fileSelector(1, $event)" />
                 <ion-img style="width: 25%; margin: auto" *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img>
-                <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePicture" [src]="playerDetails?.profilePicture ? environmenti.apiBase + 'Files/' + playerDetails.profilePicture : environmenti.defaultProfilePicture"></ion-img>
+                <!-- <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePicture" [src]="playerDetails?.profilePicture ? environmenti.apiBase + 'Files/' + playerDetails.profilePicture : environmenti.defaultProfilePicture"></ion-img> -->
+                <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePictureFullPath ? playerDetails.profilePictureFullPath  : environmenti.defaultProfilePicture"></ion-img>
                 <ion-button *ngIf="selectedProfilePicture" (click)="uploadFile(1)">Upload</ion-button>
                 <ion-button *ngIf="!playerDetails.profilePicture && !selectedProfilePicture"  onclick="document.getElementById('selectProfilePicture').click();"  color="primary" >Select Profile Picture</ion-button>
                 <ion-button *ngIf="selectedProfilePicture"  color="danger" (click)="selectedProfilePicture = null" >Clear</ion-button>
@@ -138,13 +139,17 @@
               </ion-item>
               <ion-item>
                 <ion-label position="floating">
-                  Email:
+                  Personal Number:
                 </ion-label>
-                <ion-input formControlName='email' type="text"> </ion-input>
+                <ion-input formControlName='personalNumber' type="number"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Birthdate</ion-label>
+                <ion-datetime formControlName="birthDate"></ion-datetime>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">
-                  Birth Town:
+                  Birth Place:
                 </ion-label>
                 <ion-input formControlName='birthTown' type="text"> </ion-input>
               </ion-item>
@@ -160,15 +165,35 @@
                 </ion-label>
                 <ion-input formControlName='citizenship' type="text"> </ion-input>
               </ion-item>
+            </ion-card-content>
+            </ion-card>
+
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Contact Informations</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
               <ion-item>
                 <ion-label position="floating">
-                  City:
+                  Email Address:
+                </ion-label>
+                <ion-input formControlName='email' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Phone Number:
+                </ion-label>
+                <ion-input formControlName='phoneNumber' type="text"> </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">
+                  Current City:
                 </ion-label>
                 <ion-input formControlName='city' type="text"> </ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">
-                  Country:
+                  Current Country:
                 </ion-label>
                 <ion-input formControlName='country' type="text"> </ion-input>
               </ion-item>
@@ -186,32 +211,16 @@
               </ion-item>
               <ion-item>
                 <ion-label position="floating">
-                  Address:
+                  Entrance:
                 </ion-label>
                 <ion-input formControlName='address' type="text"> </ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="floating">Birthdate</ion-label>
-                <ion-datetime formControlName="birthDate"></ion-datetime>
-              </ion-item>
-              <ion-item>
-                <ion-label position="floating">
-                  Phone Number:
-                </ion-label>
-                <ion-input formControlName='phoneNumber' type="number"> </ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="floating">
-                  Personal Number:
-                </ion-label>
-                <ion-input formControlName='personalNumber' type="number"> </ion-input>
               </ion-item>
             </ion-card-content>
           </ion-card>
           
           <ion-card>
             <ion-card-header>
-              <ion-card-title>Team Information</ion-card-title>
+              <ion-card-title>Player's profile</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               <ion-item>
@@ -235,6 +244,14 @@
                 <ion-label>Can Represent Kosovo</ion-label>
                 <ion-checkbox slot="end" formControlName="canRepresanteKosovo"></ion-checkbox>
               </ion-item>
+              </ion-card-content>
+              </ion-card>
+
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-title>Past Experiences</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
               <ion-item>
                 <ion-label>Is Player coming from the Juridiction of another Union?</ion-label>
                 <ion-checkbox slot="end" formControlName="isPlayerCommingFromTheJuridictionOfAnOtherUnion"></ion-checkbox>
@@ -267,6 +284,14 @@
                 <ion-label position="floating">Previous Club Leaving Date</ion-label>
                 <ion-datetime formControlName="previousClubLeavingDate"></ion-datetime>
               </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-title>Declaration</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
               <ion-item>
                 <ion-label>Player Declaration Signed</ion-label>
                 <ion-checkbox slot="end" formControlName="hasSignedDeclaraiton"></ion-checkbox>
@@ -274,6 +299,10 @@
               <ion-item>
                 <ion-label position="floating">Signed Date</ion-label>
                 <ion-datetime formControlName="playerDeclarationSignedOn"></ion-datetime>
+              </ion-item>
+              <ion-item>
+                <ion-label>Allow KRF To use Personal Data</ion-label>
+                <ion-checkbox slot="end" formControlName="allowKRFToUsePersonalData" ></ion-checkbox>
               </ion-item>
             </ion-card-content>
           </ion-card>
@@ -324,10 +353,7 @@
             
           </div> -->
           
-          <ion-item>
-            <ion-label>Allow KRF To use Personal Data</ion-label>
-            <ion-checkbox slot="end" formControlName="allowKRFToUsePersonalData"></ion-checkbox>
-          </ion-item>
+        
           <!-- <ion-item>
             <ion-label>Can KRF Use Data?</ion-label>
             <ion-checkbox slot="end" formControlName="canKRFUseData"></ion-checkbox>
