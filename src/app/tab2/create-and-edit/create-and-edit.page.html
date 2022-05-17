@@ -32,14 +32,14 @@
               </ion-card-header>
               <ion-card-content class="ion-text-center">
                 <p>Neutral background, standard shoulder-head picture.</p>
-                <input id="selectProfilePicture" [accept]="'.jpg, .png, .jpeg'" class="ion-text-center" type="file" (change)="fileSelector(1, $event)" />
+                <input id="selectProfilePicture" [accept]="'.jpg, .png, .jpeg'" class="ion-text-center" type="file" (change)="fileSelector(0, $event)" />
                 <ion-img style="width: 25%; margin: auto" *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img>
                 <!-- <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePicture" [src]="playerDetails?.profilePicture ? environmenti.apiBase + 'Files/' + playerDetails.profilePicture : environmenti.defaultProfilePicture"></ion-img> -->
                 <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePictureFullPath ? playerDetails.profilePictureFullPath  : environmenti.defaultProfilePicture"></ion-img>
-                <ion-button *ngIf="selectedProfilePicture" (click)="uploadFile(1)">Upload</ion-button>
+                <ion-button *ngIf="selectedProfilePicture" (click)="uploadFile(0)">Upload</ion-button>
                 <ion-button *ngIf="!playerDetails.profilePicture && !selectedProfilePicture"  onclick="document.getElementById('selectProfilePicture').click();"  color="primary" >Select Profile Picture</ion-button>
                 <ion-button *ngIf="selectedProfilePicture"  color="danger" (click)="selectedProfilePicture = null" >Clear</ion-button>
-                <ion-button *ngIf="playerDetails.profilePicture"  color="danger" (click)="deleteFileFromDB(0)" >Delete</ion-button>
+                <ion-button *ngIf="playerDetails.profilePicture"  color="danger" (click)="deleteFileFromDB(0, playerDetails.profilePicture)" >Delete</ion-button>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -49,14 +49,14 @@
                 <ion-card-title>Transfer Form Notification</ion-card-title>
               </ion-card-header>
               <ion-card-content class="ion-text-center">
-                <input  id="selectTransferFormNotification" [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(2, $event)" />
+                <input  id="selectTransferFormNotification" [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(1, $event)" />
                 <h3 *ngIf="selectedTransferFormNotificationFile">{{ selectedTransferFormNotificationFile.selectedFile.name }}</h3>
                 <h3 *ngIf="playerDetails.transferFormNotification" (click)="downloadFile(playerDetails.transferFormNotification)">{{ playerDetails.transferFormNotification }}</h3>
                 <!-- <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img> -->
-                <ion-button *ngIf="selectedTransferFormNotificationFile" (click)="uploadFile(2)">Upload</ion-button>
+                <ion-button *ngIf="selectedTransferFormNotificationFile" (click)="uploadFile(1)">Upload</ion-button>
                 <ion-button *ngIf="!playerDetails.transferFormNotification && !selectedTransferFormNotificationFile"  onclick="document.getElementById('selectTransferFormNotification').click();"  color="primary" >Select</ion-button>
                 <ion-button *ngIf="selectedTransferFormNotificationFile"  color="danger" (click)="selectedTransferFormNotificationFile = null" >Clear</ion-button>
-                <ion-button *ngIf="playerDetails.transferFormNotification"  color="danger" (click)="deleteFileFromDB(0)" >Delete</ion-button>
+                <ion-button *ngIf="playerDetails.transferFormNotification"  color="danger" (click)="deleteFileFromDB(1, playerDetails.transferFormNotification)" >Delete</ion-button>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -66,31 +66,31 @@
                 <ion-card-title>World Rugby International Clearence Form</ion-card-title>
               </ion-card-header>
               <ion-card-content class="ion-text-center">
-                <input  id="selectedWorldRugbyIntCl"  [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(3, $event)" />
+                <input  id="selectedWorldRugbyIntCl"  [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(2, $event)" />
                 <h3 *ngIf="selectedWorldRugbyIntClForm">{{ selectedWorldRugbyIntClForm.selectedFile.name }}</h3>
                 <h3 *ngIf="playerDetails.worldRugbyInternationalClearenceForm" (click)="downloadFile(playerDetails.worldRugbyInternationalClearenceForm)">{{ playerDetails.worldRugbyInternationalClearenceForm }}</h3>
                 <!-- <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img> -->
-                <ion-button *ngIf="selectedWorldRugbyIntClForm" (click)="uploadFile(3)">Upload</ion-button>
+                <ion-button *ngIf="selectedWorldRugbyIntClForm" (click)="uploadFile(2)">Upload</ion-button>
                 <ion-button *ngIf="!playerDetails.worldRugbyInternationalClearenceForm && !selectedWorldRugbyIntClForm"  onclick="document.getElementById('selectedWorldRugbyIntCl').click();"  color="primary" >Select</ion-button>
                 <ion-button *ngIf="selectedWorldRugbyIntClForm"  color="danger" (click)="selectedWorldRugbyIntClForm = null" >Clear</ion-button>
-                <ion-button *ngIf="playerDetails.worldRugbyInternationalClearenceForm"  color="danger" (click)="deleteFileFromDB(3)" >Delete</ion-button>
+                <ion-button *ngIf="playerDetails.worldRugbyInternationalClearenceForm"  color="danger" (click)="deleteFileFromDB(2, playerDetails.worldRugbyInternationalClearenceForm)" >Delete</ion-button>
               </ion-card-content>
             </ion-card>
           </ion-col>
           <ion-col size-xs="12" size-lg="6" >
             <ion-card class="ion-text-center" style="    min-height: 150px;">
               <ion-card-header>
-                <ion-card-title>Health Document</ion-card-title>
+                <ion-card-title>Medical Statement Document</ion-card-title>
               </ion-card-header>
               <ion-card-content class="ion-text-center">
-                <input  id="selectedHealthDoc"  [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(4, $event)" />
+                <input  id="selectedHealthDoc"  [accept]="'.jpg, .png, .jpeg, .pdf, .csv'" class="ion-text-center" type="file" (change)="fileSelector(3, $event)" />
                 <h3 *ngIf="selectedHealthDocument">{{ selectedHealthDocument.selectedFile.name }}</h3>
                 <h3 *ngIf="playerDetails.medicalStatement" (click)="downloadFile(playerDetails.medicalStatement)">{{ playerDetails.medicalStatement }}</h3>
                 <!-- <ion-img *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img> -->
-                <ion-button *ngIf="selectedHealthDocument" (click)="uploadFile(4)">Upload</ion-button>
+                <ion-button *ngIf="selectedHealthDocument" (click)="uploadFile(3)">Upload</ion-button>
                 <ion-button *ngIf="!playerDetails.medicalStatement && !selectedHealthDocument"  onclick="document.getElementById('selectedHealthDoc').click();"  color="primary" >Select</ion-button>
                 <ion-button *ngIf="selectedHealthDocument"  color="danger" (click)="selectedHealthDocument = null" >Clear</ion-button>
-                <ion-button *ngIf="playerDetails.medicalStatement"  color="danger" (click)="deleteFileFromDB(3)" >Delete</ion-button>
+                <ion-button *ngIf="playerDetails.medicalStatement"  color="danger" (click)="deleteFileFromDB(3, playerDetails.medicalStatement)" >Delete</ion-button>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -141,7 +141,7 @@
                 <ion-label position="floating">
                   Personal Number:
                 </ion-label>
-                <ion-input formControlName='personalNumber' type="number"> </ion-input>
+                <ion-input formControlName='personalNumber' type="text"> </ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Birthdate</ion-label>

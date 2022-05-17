@@ -268,16 +268,16 @@ export class CreateAndEditPage implements OnInit {
     console.log({type, event})
     let ab = await this.getBase64(event.target.files[0])
     console.log(ab);
-    if (type == 1) {
+    if (type == 0) {
       this.selectedProfilePicture = {selectedFile: event.target.files[0], base64: ab}
       
-    } else if (type == 2) {
+    } else if (type == 1) {
       this.selectedTransferFormNotificationFile = {selectedFile: event.target.files[0], base64: ab}
       
-    } else if (type == 3) {
+    } else if (type == 2) {
       this.selectedWorldRugbyIntClForm = {selectedFile: event.target.files[0], base64: ab}
       
-    } else if (type == 4) {
+    } else if (type == 3) {
       this.selectedHealthDocument = {selectedFile: event.target.files[0], base64: ab}
     }
 
@@ -393,38 +393,40 @@ export class CreateAndEditPage implements OnInit {
         let parametrat = {};
         let formData = new FormData();
         formData.append('PlayerId', this.playerDetails.id)
-        if (type == 1) {
+        if (type == 0) {
           formData.append('ProfilePicture', this.selectedProfilePicture.selectedFile);
 
         }
 
-        if (type == 2) {
+        if (type == 1) {
           formData.append('TransferFormNotification', this.selectedTransferFormNotificationFile.selectedFile);
 
         }
         
-        if (type == 3) {
+        if (type == 2) {
           formData.append('WorldRugbyInternationalClearenceForm', this.selectedWorldRugbyIntClForm.selectedFile);
         }
         
-        if (type == 4) {
-          formData.append('medicalStatement', this.selectedHealthDocument.selectedFile);
+        if (type == 3) {
+          formData.append('MedicalStatement', this.selectedHealthDocument.selectedFile);
         }
           
     this.alerts.presentLoadingController();
         this.webService.calling_Post_From_Api(linku, formData, true).then((data: any) => {
           console.log(data);
-          if (type == 1) { 
+          if (type == 0) { 
             this.hasUploaded.selectedProfilePicture = true;
-          } else if (type == 2) {
+            this.selectedProfilePicture = false;
+            this.playerDetails.profilePicture = data.values.profilePicture;
+          } else if (type == 1) {
             this.hasUploaded.selectedTransferFormNotificationFile = true;
-            
-          } else if (type == 3) {
+            this.playerDetails.profilePicture = data.values.transferFormNotification;
+          } else if (type == 2) {
             this.hasUploaded.selectedWorldRugbyIntClForm = true;
-            
-          } else if (type == 4) {
+            this.playerDetails.profilePicture = data.values.worldRugbyInternationalClearenceForm;
+          } else if (type == 3) {
             this.hasUploaded.selectedHealthDocument = true;
-
+            this.playerDetails.profilePicture = data.values.medicalStatement;
           }
           this.alerts.presentToast('Successfully uploaded. To see the uploaded file you have to open player details!', 'success', 5000);
           this.alerts.dismissLoadingController();
@@ -434,25 +436,29 @@ export class CreateAndEditPage implements OnInit {
         });
       }
 
-      async deleteFileFromDB(type) {
+      async deleteFileFromDB(type, fileName) {
         this.alerts.presentCancelOrConfirm('Confirmation!!', 'Are you sure you want to delete the selected file?', 'Cancel', 'DELETE').then(data => {
           if (data) {
             const linku = `players/deletefile`;
-            this.webService.calling_Post_From_Api(linku, {file_type: type, playerId: this.playerDetails.id}).then((data: any) => {
+            this.webService.calling_Post_From_Api(linku, {fileType: type, playerId: this.playerDetails.id, fileName}).then((data: any) => {
               console.log(data);
-              if (type == 1) { 
+              if (type == 0) { 
                 this.hasUploaded.selectedProfilePicture = true;
-              } else if (type == 2) {
+                this.playerDetails.profilePicture = null;
+              } else if (type == 1) {
                 this.hasUploaded.selectedTransferFormNotificationFile = true;
+                this.playerDetails.transferFormNotification = null;
+                
+              } else if (type == 2) {
+                this.hasUploaded.selectedWorldRugbyIntClForm = true;
+                this.playerDetails.worldRugbyInternationalClearenceForm = null;
                 
               } else if (type == 3) {
-                this.hasUploaded.selectedWorldRugbyIntClForm = true;
-                
-              } else if (type == 4) {
                 this.hasUploaded.selectedHealthDocument = true;
+                this.playerDetails.medicalStatement = null;
     
               }
-              this.alerts.presentToast('Successfully uploaded. To see the uploaded file you have to open player details!', 'success', 5000);
+              this.alerts.presentToast('File Deleted', 'success', 5000);
               this.alerts.dismissLoadingController();
             }).catch((err: any) => {
               this.alerts.dismissLoadingController();
