@@ -40,8 +40,7 @@
             <ion-card *ngIf="player.ageGroup == 0 && player.status != playerStatusesENUMS.rejected" >
               <ion-item lines="none" detail="true" button="true" (click)="viewPlayerDetails(player)">
                 <ion-avatar  slot="start">
-                  <!-- <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' +  player.profilePicture : environmenti.defaultProfilePicture"></ion-img> -->
-                  <ion-img [src]="player.profilePictureFullPath ? player.profilePictureFullPath  : environmenti.defaultProfilePicture"></ion-img>
+                  <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' + player.profilePicture : environmenti.defaultProfilePicture"></ion-img>
                 </ion-avatar>
                 <div class="playerDetailsOnLists">
                   <p>{{ player?.firstName }} {{ player?.lastName }} | {{ player?.birthDate | date:"dd.MM.yyyy" }} </p>
@@ -72,8 +71,7 @@
           <ion-card *ngIf="player.ageGroup == 1 && player.status != playerStatusesENUMS.rejected" >
             <ion-item lines="none" detail="true" button="true" (click)="viewPlayerDetails(player)">
               <ion-avatar  slot="start">
-                <!-- <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' +  player.profilePicture : environmenti.defaultProfilePicture"></ion-img> -->
-                <ion-img [src]="player.profilePictureFullPath ? player.profilePictureFullPath  : environmenti.defaultProfilePicture"></ion-img>
+                <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' +  player.profilePicture : environmenti.defaultProfilePicture"></ion-img>
               </ion-avatar>
               <div>
                 <div class="playerDetailsOnLists">
@@ -103,7 +101,7 @@
           <ion-card *ngFor="let player of playersList">
             <ion-item lines="none" detail="true" button="true" (click)="viewPlayerDetails(player)">
               <ion-avatar  slot="start">
-                <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' +  player.profilePicture : environmenti.defaultProfilePicture"></ion-img>
+                <ion-img [src]="player.profilePicture ? environmenti.apiBase + ''Files/' +   player.profilePicture : environmenti.defaultProfilePicture"></ion-img>
               </ion-avatar>
               <div>
                 <h3 style="margin: 0;">{{ player?.firstName }} {{ player?.lastName }} | {{ player?.birthDate | date:"dd.MM.yyyy" }} </h3>
@@ -130,8 +128,7 @@
         <ion-card *ngIf="player.status == playerStatusesENUMS.rejected" >
           <ion-item lines="none" detail="true" button="true" (click)="viewPlayerDetails(player)">
             <ion-avatar  slot="start">
-              <!-- <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' +  player.profilePicture : environmenti.defaultProfilePicture"></ion-img> -->
-              <ion-img [src]="player.profilePictureFullPath ? player.profilePictureFullPath  : environmenti.defaultProfilePicture"></ion-img>
+              <ion-img [src]="player.profilePicture ? environmenti.apiBase + 'Files/' + player.profilePicture : environmenti.defaultProfilePicture"></ion-img>
             </ion-avatar>
             <div>
               <div class="playerDetailsOnLists">

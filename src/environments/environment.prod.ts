@@ -1,5 +1,5 @@
 
-const apiLink = 'https://krfapi.azurewebsites.net/';
+const apiLink = 'https://krf.azurewebsites.net/';
 
 export const environment = {
   production: true,

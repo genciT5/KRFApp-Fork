@@ -21,7 +21,7 @@ export class Tab2Page {
   playersList: any[] = [
     
   ];
-
+  
   clubId = null;
 
   playerStatusesENUMS = PlayerStatusesENUMS;

@@ -34,8 +34,8 @@
                 <p>Neutral background, standard shoulder-head picture.</p>
                 <input id="selectProfilePicture" [accept]="'.jpg, .png, .jpeg'" class="ion-text-center" type="file" (change)="fileSelector(0, $event)" />
                 <ion-img style="width: 25%; margin: auto" *ngIf="selectedProfilePicture" [src]="selectedProfilePicture?.base64"></ion-img>
-                <!-- <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePicture" [src]="playerDetails?.profilePicture ? environmenti.apiBase + 'Files/' + playerDetails.profilePicture : environmenti.defaultProfilePicture"></ion-img> -->
-                <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePictureFullPath ? playerDetails.profilePictureFullPath  : environmenti.defaultProfilePicture"></ion-img>
+                <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePicture" [src]="playerDetails?.profilePicture ? environmenti.apiBase + 'Files/' + playerDetails.profilePicture : environmenti.defaultProfilePicture"></ion-img>
+                <!-- <ion-img style="width: 25%; margin: auto" *ngIf="playerDetails.profilePictureFullPath ? playerDetails.profilePictureFullPath  : environmenti.defaultProfilePicture"></ion-img> -->
                 <ion-button *ngIf="selectedProfilePicture" (click)="uploadFile(0)">Upload</ion-button>
                 <ion-button *ngIf="!playerDetails.profilePicture && !selectedProfilePicture"  onclick="document.getElementById('selectProfilePicture').click();"  color="primary" >Select Profile Picture</ion-button>
                 <ion-button *ngIf="selectedProfilePicture"  color="danger" (click)="selectedProfilePicture = null" >Clear</ion-button>
